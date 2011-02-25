@@ -1,0 +1,91 @@
+<html><head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="smartupdater.js"></script>
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+</head>
+<body>
+
+
+<h2>Smartupdater - Stop/Continue</h2>
+<hr>
+<div class="leftpanel">
+<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater Status: <span class="su" id="statusSU"></span></div>
+<div>Smartpdater Timeout: <span class="su" id="timeoutSU"></span></div>
+<br/>
+
+
+
+<input id="stopSU" onclick='$("#example1").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
+<input  id="continueSU" onclick='$("#example1").smartupdaterContinue();' title="restart polling without resetting poll interval" type="button" value="Continue"/> 
+
+
+
+<div>Time on server: <span class="su" id='example2'></span></div>
+<div>Smartpdater Status: <span class="su" id="statusSU_2"></span></div>
+<br/>
+<input id="stopSU" onclick='$("#example2").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
+<input  id="continueSU" onclick='$("#example2").smartupdaterContinue();' title="restart polling without resetting poll interval" type="button" value="Continue"/> 
+
+
+<p><div class="code"><code>	
+		$("#example1").smartupdater({<br/>
+&nbsp;&nbsp;			url : 'gettime.php',<br/>
+&nbsp;&nbsp;			minTimeout: 2000 // 2 seconds<br/>
+&nbsp;&nbsp;			}, function (data) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;				$("#example1").html(data);<br/>
+&nbsp;&nbsp;			}<br/>
+		);
+</code></div></p>
+<p>
+<div class="code">
+<code>
+$("#example1").smartupdaterStop();<br/><br/>
+$("#example1").smartupdaterContinue();
+</code></div></p>
+</div> <!-- leftpanel-->
+
+<div class="rightpanel">
+<h4>Stop and Continue</h4>
+Sometimes you want to stop polling and continue it later. For example if user minimizes an   
+active object or enlarges another object which covers the active one you don't want to 
+to keep polling as it simply wasting both server and client resourses. Smartupdater 
+lets you to stop polling and continue it as needed.
+
+</div><!--rightpanel-->
+<br clear="both"/>
+<hr/>
+
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+		$("#example1").smartupdater({
+			url : 'gettime.php',
+			minTimeout: 2000 // 2 seconds
+			}, function (data) {
+				$("#example1").html(data);
+			}
+		); 
+		
+		//Let's check Smartupdater status every 1 second
+		setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus)',1000);
+		setInterval('$("#timeoutSU").html($("#example1")[0].smartupdaterTimeout)',1000);
+		
+		$("#example2").smartupdater({
+			url : 'gettime.php',
+			minTimeout: 2000 // 2 seconds
+			}, function (data) {
+				$("#example2").html(data);
+			}
+		);
+		
+		//Let's check Smartupdater status every 1 second
+		setInterval('$("#statusSU_2").html($("#example2")[0].smartupdaterStatus)',1000);
+});
+</script>
+
+
+</body>
+</html>

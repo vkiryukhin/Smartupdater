@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="smartupdater.js"></script>
+<!--script type="text/javascript" src="json2min.js"></script-->
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+<title>Smartupdater - jQuery periodical updater</title>
+</head>
+<body>
+<h1>Smartupdater </h1>
+<div style="text-align:center;text-size:75%"> 
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_home.html">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_basic.html">Basic</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_stop.html">Stop / Restart</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_timeout.html">Programmable Timeout</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_smart.html">Smart Updating </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="smartupdater_remote.html">Remote Control</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="https://code.google.com/p/smartupdater/downloads/list" target="_blank">
+Download</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="http://vadimkir.blogspot.com/2010/08/smartupdater-periodical-updater.html" target="_blank">
+Blog</a>
+</div>
+<hr/>
+<h2>Remote Control   <span style="font-style:italic;color:#800; text-align:center;font-size:60%; font-weight:normal">( JSON only )</span></h2>
+
+
+<div class="leftpanel">
+<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater Timeout: <span class="su" id="timeoutSU"></span></div>
+<br/>
+<br/>
+
+<input id="newTimeout" size="2" type="text" /> <b>sec.</b> &nbsp;
+<input type="button" value="send to server" onclick="suSetTimeout();" />
+<br/><br/><br/>
+<p>
+<div class="code">
+<code>	
+$("#example1").smartupdater({<br/>
+&nbsp;&nbsp;		url : 'foo.php',<br/>
+&nbsp;&nbsp;		dataType : 'json',<br/>
+&nbsp;&nbsp;		minTimeout: 5000 // 5 seconds<br/>
+&nbsp;&nbsp;		}, function (data) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			$("#example1").html(data.servertime);<br/>
+	&nbsp;&nbsp;	}<br/>
+	);<br/>
+</code>
+</div>
+</p>
+
+<p></p>
+
+<p>
+The simpliest JSON data can look like this one:
+<div class="code">
+<p>
+<code>{<br/>
+&nbsp;&nbsp;"servertime":"03:19:11",<br/>
+&nbsp;&nbsp;"smartupdater":"15000"<br/>
+}</code>
+</p>
+</div>
+</p>
+
+</div> <!-- leftpanel-->
+
+<div class="rightpanel">
+<h4>How to Avoid Server Overload</h4>
+<p>
+Everybody who has deal with polling systems knows, that server can be easily overloaded with 
+client-side requests, so we try to set polling period as low as possible. But if number users 
+grows, we have to either increase polling period and make our application less dynamic or spend 
+money on either upgrading hardware or buying additional resurces from service provider. <br/>
+Another problem - 
+simultanious access of large number of users which is very common for educational applications. 
+</p><p>
+
+Smartupdater resolves these problems! 
+"<b>Remote programming</b>" feature allows server to programm 
+polling interval on client side dynamically. How it works.
+</p>
+<b>Server:</b>
+<ol>
+<li>Server gets regular polling request from a client</li>
+<li>gathers requested data and build JSON</li>
+<li>checks CPU usage.</li>
+<li>in pre-defined look-up table finds the best polling period for current CPU-usage level.</li>
+<li>appends polling period parameter to the JSON.</li>
+<li>sends JSON to a client</li>
+</ol>
+
+<b>Client:</b>
+<ol>
+<li>Smartupdater receives JSON data from server</li>
+<li>Smartupdater check the data and if finds configuration portion, extracts a new timeout 
+and re-programs itself by appling this timeout</li>
+<li>passes data to a callback function</li>
+</ol>
+
+
+<p>
+You even don't need to configure Smartupdater to activate this feature :) It's done automatically.
+</p>
+<!--
+<p>
+OK, let's look at server side. What should be done here to support this amazing feature?<br/><br/>
+<b>1) How to find CPU usage statistics? </b><br/><br/>
+There are many ways to do it. One of them is to run a "top" UNIX utility and get idle CPU time 
+from the summary area of the result and save it in a file. Something like this:
+<p><div class="code"><code>
+&lt?php<br/>
+$top = explode(",",shell_exec("top -n 1 -b | fgrep '%id'"));<br/>
+$idleCPU = floor((int)preg_replace("/\D{0,}/","",$top[3])/100);<br/>
+$CPU_usage_level = 10 - $idleCPU;<br/>
+<br/>
+$fp = fopen("cpu_usage.dat", "w");<br/>
+fwrite($fp, $CPU_usage_level);<br/>
+fclose($fp);<br/>
+?&gt;
+
+</code></div></p>
+
+You can run it with cron, say, once in a minute.
+<p>
+<b>2) How to get the data.</b><br/><br/>
+Your regular script gathers information, builds JSON and then opens the file and get CPU_usage_level 
+(in this case it is one byte, range 1 - 9) and based on the level find out right timeout and append this 
+configuration portion to the regular data.
+</p>
+<p><div class="code"><code>
+&lt?php<br/>
+$fp = fopen("cpu_usage.dat", "r");<br/>
+$CPU_usage_level = fgetc($fp);<br/>
+fclose($fp);<br/>
+<br/>
+switch ($CPU_usage_level) {<br/>
+&nbsp;&nbsp;    case 1:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;        $config = "smartupdater":"10000";<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;        break;<br/>
+&nbsp;&nbsp;   case 2:<br/>
+&nbsp;&nbsp; &nbsp;&nbsp;      $config = "smartupdater":"20000";<br/>
+&nbsp;&nbsp; &nbsp;&nbsp;      break;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;		...<br/>
+}<br/>
+
+...
+
+</code></div></p>
+
+I don't say it is the best way to organize CPU monitoring 
+and interprocess communication at server side, it's just one of possible ways. <br/>
+So, UNIX experts, your suggestions are welcome :)
+
+-->
+
+</div><!--rightpanel-->
+<br clear="all"/>
+<hr/>
+<div style="text-align:center;color:#999999;font-size:70%;">
+&copy;2010 Vadim Kiryukhin </div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+
+	$("#example1").smartupdater({
+		url : 'remotecontrol.php',
+		dataType : 'json',
+		minTimeout: 5000 // 5 seconds
+		}, function (data) {
+			$("#example1").html(data.servertime);
+		}
+	);
+
+	//Let's check Smartupdater status every 1 second
+	setInterval('$("#timeoutSU").html($("#example1")[0].smartupdaterStatus.timeout)',1000);
+});		
+
+		
+function suSetTimeout() 
+{
+/*
+ * this function sends desired timeout to the server, which 
+ * saves the data in the $_SESSION array.
+ */
+	$.get( 'settings.php', { smartupdater:$("#newTimeout").val() * 1000});
+}
+
+</script>
+
+
+</body>
+</html>

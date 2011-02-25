@@ -1,0 +1,1 @@
+<?php echo '{"servertime":"'.date('h:i:s').'"}';?>

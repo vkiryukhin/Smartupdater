@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.js"></script>
+<script type="text/javascript" src="smartupdater.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+<title>Smartupdater - jQuery periodical updater</title>
+</head>
+<body>
+
+
+<!-- ================= header ======================= -->
+<div id="header">
+	I am a header
+	<ul>
+		<li data-content="content/overview.html">Overview</li>
+		<li data-content="content/api.html">Documentation</li>
+		<li ><a href="http://vadimkir.blogspot.com/" target="_blank">Blog</a></li>
+		<li ><a href="https://code.google.com/p/smartupdater/downloads/list" target="_blank">Download</a></li>
+	</ul>
+</div> <!-- /header -->
+<!-- ================= container ======================= -->
+<div id="container" >
+
+<!-- ================= left panel ======================= -->
+<div id="menu" >
+	<ul>
+		<li>Smart Client
+			<ul>
+				<li data-content="content/stop_restart.html">Stop/Restart</li>
+				<li data-content="content/reprog_timeout.html">Dynamic Timeout</li>
+				<li data-content="content/reprog_url.html">Dynamic polling URL</li>
+				<li data-content="content/reprog_callback.html">Dynamic Callback</li>
+				<li data-content="content/client_usage_ideas.html">Usage Ideas</li>
+			</ul>
+		</li>
+		<li>Smart Server
+			<ul>
+				<li data-content="content/http_cache.html">HTTP cache (304 Not Modified)</li>
+				<li data-content="content/remote_timeout.html">Remote Timeout</li>
+				<li data-content="content/remote_callback.html">Remote Callback</li>
+				<li data-content="content/server_overload_protection.html">Server Overload Protection</li>
+				<li data-content="content/server_usage_ideas.html">Usage Ideas</li>
+			</ul>
+		</li>
+	</ul>
+</div> <!-- /menu -->
+
+<!-- ================= right panel ======================= -->
+<div id="content">
+	content here
+</div><!-- /content -->	
+<br clear="both"/>
+</div> <!-- /container -->	
+<!-- ================= footer ======================= -->
+<div style="clear:both;"></div>
+
+<div id="footer">
+I am a footer
+</div> <!-- /footer -->
+
+
+</body>
+</html>

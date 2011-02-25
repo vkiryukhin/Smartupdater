@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.js"></script>
+<!--script type="text/javascript" src="jquery144.js"></script-->
+
+<script type="text/javascript" src="smartupdater.js"></script>
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+<title>Smartupdater - jQuery periodical updater</title>
+</head>
+<body>
+
+<div id="header"></div>
+
+<h2 >Smart Traffic </h2>
+
+<div class="leftpanel">
+<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater Timeout: <span class="su" id="statusTO"></span></div>
+<div>Smartpdater State: <span class="su" id="statusState"></span></div>
+<input id="stopSU" onclick='$("#example1").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
+<input  id="restartSU" onclick='$("#example1").smartupdaterRestart();' title="reset poll interval to minTimeout and restart polling" type="button" value="Restart" />
+
+<br/><br/>
+
+<input type="button"  onclick="setUrl()" value="Set URL" />&nbsp;&nbsp;
+<input type="button"  onclick='$("#example1").smartupdaterAlter();' value="Set Default" />
+
+</div> <!-- leftpanel-->
+
+<div class="rightpanel">
+
+
+
+</div><!--rightpanel-->
+<br clear="both"/>
+<hr/>
+
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+		$("#example1").smartupdater({
+			url : 'getmin_cache_control.php',
+			minTimeout: 5000, // 10 seconds
+			httpCache  : true,
+			rCallback: "foo,bar"
+			}, function (data) {
+				$("#example1").html(data);
+			}
+		);
+		setInterval('document.getElementById("statusTO").innerHTML=($("#example1")[0].smartupdaterStatus.timeout)',1000);
+		setInterval('document.getElementById("statusState").innerHTML=($("#example1")[0].smartupdaterStatus.state)',1000);
+
+		
+		$('#header').load('smartupdater_header.html');
+		$('#footer').load('smartupdater_footer.html');
+});
+
+function foo(data) { alert("foo: "+data);}
+function bar(data){	alert("bar: "+data);}
+
+function setUrl()
+{
+	$("#example1").smartupdaterAlter("set_url_test.php", false, function (data) {
+				$("#example1").html(data+"  ku-ku");
+				//alert(data);
+			});//, {id:12});
+}
+
+
+
+
+</script>
+
+<div id="footer" style="text-align:center;color:#999999;font-size:80%;"></div>
+
+</body>
+</html>

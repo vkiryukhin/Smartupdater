@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.js"></script>
+<!--script type="text/javascript" src="jquery144.js"></script-->
+
+<script type="text/javascript" src="smartupdater.js"></script>
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+<title>Smartupdater - jQuery periodical updater</title>
+</head>
+<body>
+
+<div id="header"></div>
+
+<h2 >Smart Traffic </h2>
+
+<div class="leftpanel">
+<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater State: <span class="su" id="statusSU"></span></div>
+<br/>
+
+<input id="stopSU" onclick='$("#example1").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
+<input  id="restartSU" onclick='$("#example1").smartupdaterRestart();' title="reset poll interval to minTimeout and restart polling" type="button" value="Restart" />
+<p><div class="code"><code>	
+		$("#example1").smartupdater({<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			url: 'getmin_cache_control.php',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			minTimeout: 2000, // <span class="comments">2 seconds</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span style="color:blue;"><b>httpCache:true</b></span><br/>
+&nbsp;&nbsp;			}, function (data) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			$("#example1").html(data);<br/>
+&nbsp;&nbsp;			}<br/>
+		);
+
+</code></div></p>
+<p>
+<div class="code">
+<code>
+<span class="header">Example of PHP code to use Smartupdater's <br/>
+"httpCache" feature.<br/><br/> </span>
+
+<span class="phpcolor">&lt;?php </span><br/>
+
+	$servertime = date('h:i');<br/>
+	$checksum = md5($servertime);<br/>
+	if($checksum != $_SERVER['HTTP_IF_NONE_MATCH']) {<br/>
+&nbsp;&nbsp;		header("Content-MD5:$checksum");<br/>
+&nbsp;&nbsp;		header('Cache-Control: public');<br/>
+&nbsp;&nbsp;		echo $servertime;<br/>
+	} else {<br/>
+&nbsp;&nbsp;		header("HTTP/1.1 304 Not Modified");<br/>
+&nbsp;&nbsp;		exit;<br/>
+	}<br/>
+
+<span class="phpcolor">?&gt;</span>
+<br/><br/>
+</code></div></p>
+
+This algorithm we can call "all or none". Indeed, server either sends all data if the data was changed
+or nothing otherwise. But very often we want to get not entire data, but only new portion of it, only actual changes, only delta. Let's call it "delta" algorithm. 
+
+</div> <!-- leftpanel-->
+
+<div class="rightpanel">
+<h3>Reduce traffic with http cache technique  </h3>
+
+<p>As you already know, Smartupdater doesn't update client if received data isn't changed. 
+But wait: why does server send the data, if it ignores anyway? Obviously, it's simply waist of
+resourses. Fortunately, Smartupdater can help you to eliminate this unnecessary traffic. 
+To do it Smartupdater uses HTTP/1.1 caching technique. How it works.
+</p>
+
+
+<div class="header">Cycle #1</div>
+
+<div class="header">Server:</div>
+<ol>
+<li> Server gets data (in response of a request).</li>
+<li> Server calculates MD5 hash (SHA1/CRC32/etc) of this data.</li>
+<li> Server sets header's field "Content-MD5" with this hash.</li>
+<li> Server sends data.</li>
+</ol>
+
+<div class="header">Smartupdater:</div>
+<ol>
+<li>Smartupdater parses HTTP header, finds "Content-MD5" field and cache it value.</li>
+<li>Smartupdater process data.</li>
+</ol>
+ 
+<div class="header">Cycle #2</div>
+<div class="header">Smartupdater:</div> 
+<ol>
+<li>Smartupdater sets header's field "If-None-Match" with MD5 string,
+which was cached in the cycle #1.</li>
+<li>Smartupdater sends regular request to server.</li>
+</ol>
+<div class="header">Server:</div>
+<ol>
+<li>Server gets data (in response of the request).</li>
+<li>Server calculates MD5 hash (SHA1/CRC32/etc) of this data.</li>
+<li>Server parses HTTP header, finds "If-None-Match" field and 
+compares it value with calculated MD5.</li>
+<li>
+<div>* If these MD5's are not equal (which means that previous data and new one are different),
+Server sets header's field "Content-MD5" with calculated MD5 and sends data.</div>
+<div>* If these MD5's are equal (which means that previous data and the new one are equal),
+server send nothing.</div>
+</li>
+</ol>
+
+</p>
+<p>
+By default this feature is disabled. 
+To activate it, set attribute 
+<code>httpCache: true </code>
+</p>
+
+Just a few line (literaly) of php code can significantly reduce your server traffic. Debug this page to see 
+how it works. 
+
+
+
+</p>
+
+
+
+</div><!--rightpanel-->
+<br clear="both"/>
+<hr/>
+
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+		$("#example1").smartupdater({
+			url : 'getmin_cache_control.php',
+			multiplier:1,
+			minTimeout: 5000, // 10 seconds
+			maxFailedRequests : 3,
+			httpCache  : true,
+			rCallback: "foo,bar"
+			}, function (data) {
+				$("#example1").html(data);
+			}
+		);
+		
+		//Let's check Smartupdater status every 1 second
+		//setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus.state)',1000);
+		setInterval('document.getElementById("statusSU").innerHTML=($("#example1")[0].smartupdaterStatus.state)',1000);
+		
+		$('#header').load('smartupdater_header.html');
+		$('#footer').load('smartupdater_footer.html');
+});
+
+function foo(data)
+{
+	//alert(data.servertime);
+	//alert($("#example1")[0].smartupdaterStatus.timeout);
+	alert("foo: "+data);
+}
+
+function bar(data)
+{
+	alert("bar: "+data);
+}
+</script>
+
+<div id="footer" style="text-align:center;color:#999999;font-size:80%;"></div>
+
+</body>
+</html>

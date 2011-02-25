@@ -1,0 +1,84 @@
+<!-- ======================= Left Panel ================================= -->
+
+<div id="leftpanel">
+
+	<div id="demopanel">
+
+		<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater Timeout: <span class="su" id="timeoutSU"></span></div>
+
+<br/>
+<br/>
+
+
+<input id="newTimeout" size="2" type="text" /> <b>sec.</b> &nbsp;<input type="button" value="set timeout" onclick="suSetTimeout();" />
+
+
+
+	</div> <!-- /demopanel -->
+
+<div id="codepanel" >
+
+<div class="codecontrol" onclick="$(this).siblings().toggle();">[ view code ]</div> 
+<div class="codesource" >
+<div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
+<pre>
+&lt;div id='example1'&gt;&lt;/div&gt;
+&lt;div id="statusSU"&gt;&lt;/div&gt;
+
+$("#example1").smartupdater({
+	url : 'gettime.php',
+	minTimeout: 2000 // 2 seconds
+	}, function (data) {
+		$("#example1").html(data);
+	}
+);
+	
+&lt;input onclick='$("#example1").smartupdaterStop();'    type="button" value="Stop"    /&gt;
+&lt;input onclick='$("#example1").smartupdaterRestart();' type="button" value="Restart" /&gt;
+
+</pre>
+</div>
+</div> <!-- /codepanel -->
+</div> <!-- /leftpanel -->
+
+
+<!-- ======================= Right Panel ================================= -->    
+<div id="rightpanel">
+
+<h3>Dynamic Timeout</h3>
+
+
+<p>OK. At certain point of your development you realise that your application is very complex and Smartupdater is not really "smart" to implement your updating needs. Though multiplying timeout based on returned data algorithm is suitable for most applications, some advanced applications need in more complex and specific updating pattern.</p>
+
+<p>Well, Smartupdater cannot be smarter then you, the developer. But it smart enough to let you to implement your own algorithm and re-progrmm it dynamically. At any time you can set any timeout which is right for this particular task your application is executing. See how it works in this demo. (Set interval in seconds, not miliseconds)</p>
+
+
+
+</div> <!-- /rightpanel -->
+<!-- ======================= End HTML ================================= -->
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+	$("#example1").smartupdater({
+		url : 'gettime.php',
+		minTimeout: 5000 // 5 seconds
+		}, function (data) {
+			$("#example1").html(data);
+		}
+	);
+		
+	//Let's check Smartupdater status every 1 second
+	setInterval('$("#timeoutSU").html($("#example1")[0].smartupdaterStatus.timeout)',1000);
+});
+		
+function suSetTimeout() 
+{
+	var timeout = $("#newTimeout").val() * 1000;
+	if (timeout < 1000) timeout = 1000;
+	$("#example1").smartupdaterSetTimeout(timeout);
+}
+
+</script>
+
+</div/>

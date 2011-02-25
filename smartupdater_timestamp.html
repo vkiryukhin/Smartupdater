@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="smartupdater.js"></script>
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+<title>Smartupdater - jQuery periodical updater</title>
+</head>
+<body>
+
+<div id="header"></div>
+
+<h2>Smart diff (<span style="color:red;font-size:80%;"> json only </span>)</h2>
+
+<div class="leftpanel">
+<div>Time on server: <span class="su" id='example1'></span></div>
+<div>Smartpdater State: <span class="su" id="statusSU"></span></div>
+<br/>
+
+<input id="stopSU" onclick='$("#example1").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
+<input  id="restartSU" onclick='$("#example1").smartupdaterRestart();' title="reset poll interval to minTimeout and restart polling" type="button" value="Restart" />
+<p><div class="code"><code>	
+		$("#example1").smartupdater({<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			url: 'getmin_timestamp.php',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			dataType: 'json', //<span class="comments">JSON is mandatory; </span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			data: {"cmd":"foo","value":"bar"}, //<span class="comments">any data or no data </span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			multiplier: 1, //<span class="comments">disabled to simplify debugging;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//<span class="comments">doesn't affect feedback feature</span> <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;			minTimeout: 10000 // <span class="comments">10 seconds</span><br/>
+&nbsp;&nbsp;			}, function (data) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;			$("#example1").html(data.servertime);<br/>
+&nbsp;&nbsp;			}<br/>
+		);
+
+</code></div></p>
+<p>
+<div class="code">
+<code>
+<span class="header">PHP code to activate and use Smartupdater's <br/>
+timestamp feedback technique.<br/><br/> </span>
+
+<span class="phpcolor">&lt;?php </span><br/>
+session_start();<br/>
+$last_checksum = $_GET['checksum'];<br/><br/>
+$servertime = date('h:i');<br/><br/>
+
+<span class="comments">/*<br/>&nbsp;* For this example I use CRC32,<br/>&nbsp;* but any hash (MD5/SHA1/etc.) works.<br/>&nbsp;*/
+<br/></span>
+$checksum = abs(crc32($servertime));<br/><br/>
+
+if ($last_checksum == $checksum) {<br/>
+&nbsp;&nbsp;	$servertime ="";<br/>
+}<br/><br/>
+$result = <span class="textinquote">'{"servertime":"'</span>.$servertime.<span class="textinquote">'", "checksum":"'</span>.$checksum.<span class="textinquote">'"}';</span><br/>
+<br/>
+echo $result;<br/>
+<span class="phpcolor">?&gt;</span>
+<br/><br/>
+</code></div></p>
+
+
+<p>
+<div class="code">
+<code>
+<span class="header">Server response<br/><br/> </span>
+
+//<span class="comments">data has been changed since last request:</span><br/>
+{"servertime":"03:32","checksum":"1864545246"}<br/><br/>
+
+//<span class="comments">data has not been changed since last request:</span><br/>
+{"servertime":"","checksum":"1864545246"}<br/>
+</code></div></p>
+
+</div> <!-- leftpanel-->
+
+<div class="rightpanel">
+<h4>Reduce traffic with timestamp-exchange technique  </h4>
+
+<p>As you already know, Smartupdater doesn't update client if received data isn't changed. 
+But wait: why does server send the data, if it ignores anyway? Well, server doesn't "remember" what was sent and
+can't compare new data and old one to make right decision.</p>
+<p>Smartupdater take care of it. <br/>
+If server adds data's checksum (CRC32 or any hash like MD5/LHA1/etc.) to the send data, Smartupdater returns it back 
+to the server as a parameter with the next request. 
+In response of client request server gather backend information and 
+calculates checksum.. Then server compares new chechsum with chechsum received from client. 
+If they're equal, server can send simply empty string instead of actual data, but still need to add checksum 
+to the sending package. You don't need to configure Smartupdater to activate this feature. It always checks for 
+"checksum" each JSON package and if finds, returns it to the server at next request. 
+<br/><br/>
+
+This very simple (just 2 lines of php code, literaly) feature can significantly reduce traffic. Debug this page to see 
+how it works. 
+
+
+
+</p>
+
+
+
+</div><!--rightpanel-->
+<br clear="both"/>
+<hr/>
+
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+		$("#example1").smartupdater({
+			url : 'getmin_checksum.php',
+			dataType:'json',
+			data:{"cmd":"foo","value":"bar"},
+			multiplier	: 1,
+			minTimeout: 10000 // 2 seconds
+			}, function (data) {
+				$("#example1").html(data.servertime);
+			}
+		);
+		
+		//Let's check Smartupdater status every 1 second
+		setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus.state)',1000);
+		
+		$('#header').load('smartupdater_header.html');
+		$('#footer').load('smartupdater_footer.html');
+});
+
+
+
+</script>
+
+<div id="footer" style="text-align:center;color:#999999;font-size:80%;"></div>
+
+</body>
+</html>

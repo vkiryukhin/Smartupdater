@@ -1,0 +1,67 @@
+<div class="textonly">
+<p>Smartupdater plugin performs periodical updating functionality and can be used in all sorts of applications which need polling mechanisms. </p>
+
+<div id="leftcolumn" class="leftcolumn">
+<ul>
+	<li>Smart Actions:
+		<ul>
+			<li>Stop/Restart polling</li>
+			<li>Change polling timeout dynamically</li>
+			<li>Switch polling URL dynamically</li>
+			<li>Switch callback function dynamically</li>
+			<li>Remotely set polling timeout </li>
+			<li>Remotely select callback function </li>
+		</ul>
+	</li>
+	<li>Smart behavior:
+		<ul>
+			<li><b>Updating:</b> <div>client GUI is updated only if new data is different from the old one.</div></li>
+<li><b>Errors:</b> <div>stop polling after predefined number of failures.</div></li>
+<li><b>Traffic:</b> <div>support "304 NotModified" http caching with "ETag" and "Last-Modified"</div></li>
+<li><b>Feedback:</b><div> sends current timeout to server as a feedback which allows server to protect itself from overloading by increasing timeout and/or organize automatic control to force client to keep timeout within a valid range.</div></li>
+<li><b>Smart Server:</b> <div>depend on result and other conditions, server can specify which callback function on client side should be called to process this particular data.</div></li>
+<li><b>Smart Client:</b> <div>depend on application's state, carrent layout, etc., client can specify which url should be reqested at this particular moment.</div></li>
+		</ul>
+	</li>
+	<li>Smart Monitor:
+		<ul>
+			<li>state</li>
+			<li>timeout</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div id="rightcolumn" class="rightcolumn">
+<ul>
+	<li>List of available functions
+		<ul>
+			<li><code>smartupdaterStop()</code> - to stop polling</li>
+			<li><code>smartupdaterRestart()</code> - to run polling</li>
+			<li><code>smartupdaterSetTimeout()</code> - to set a new polling interval</li>
+			<li><code>smartupdaterAlter()</code> - to alter URL and/or callback function</li>
+		</ul>
+	</li>
+	<li>List of available attributes
+		<ul>
+			<li><code>smartupdaterStatus.state</code> - current state (ON|OFF|undefined)</li>
+			<li><code>smartupdaterStatus.timeout</code> - current timeout</li>
+		</ul>
+	</li>
+
+	<li>List of available options
+		<ul>
+			<li><code>url</code> - URL for the ajax request. (Required!)</li>
+			<li><code>type</code> - Can be either GET or POST</li>
+			<li><code>data</code> - Array of values to be passed to the page</li>
+			<li><code>dataType</code> - Response type<br/><br/></li>
+			<li><code>minTimeout</code> - Value for the timeout, in milliseconds.</li>
+			<li><code>maxFailedRequests</code> - smartupdater stops after this number of consecutive ajax failures;</li>
+			<li><code>httpCache</code> - Activate http caching feature</li>
+			<li><code>rCallback</code> - List of callback functions which are allowed to run remotely from server</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+</div>

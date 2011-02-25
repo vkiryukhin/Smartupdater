@@ -1,0 +1,60 @@
+<html><head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="smartupdater.js"></script>
+<link rel="stylesheet" type="text/css" href="smartupdater.css" media="screen" />
+</head>
+<body>
+
+
+<h2>Smartupdater - Failure Handle</h2>
+<hr/>
+<div class="leftpanel">
+<div>Time on server: <span id='example1'></span></div>
+<br/>
+
+
+<p><div class="code"><code>	
+$("#example1").smartupdater({<br/>
+&nbsp;&nbsp;			url : 'brokenpage.php',<br/>
+&nbsp;&nbsp;			maxFailedRequests : 5,<br/>
+&nbsp;&nbsp;			minTimeout: 3000 // 3 seconds<br/>
+&nbsp;&nbsp;			}, function (data) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;				$("#example1").html(data);<br/>
+&nbsp;&nbsp;			}<br/>
+		);<br/>
+</code></div></p>
+
+</div>
+
+
+
+
+<div class="rightpanel">
+
+<h4>maxFailedRequests</h4>
+<p>
+Smartupdater stops polling after it gets <code>maxFailedRequests</code> consecutive ajax failures 
+(default is 10). In this page Smartupdater polling <code>brokenpage.php</code> page, which doesn't 
+exist on this server. It makes 5 attempts to get data and then stops itself.<br/><br/>
+ Open Firebug and check network activity</p>
+</div>
+<br clear="both"/>
+<hr/>
+
+<script type="text/javascript">
+$(document).ready(function()
+{ 
+		$("#example1").smartupdater({
+			url : 'brokenpage.php',
+			maxFailedRequests : 5,
+			minTimeout: 3000 // 3 seconds
+			}, function (data) {
+				$("#example1").html(data);
+			}
+		);
+});
+</script>
+
+
+</body>
+</html>
