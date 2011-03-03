@@ -29,8 +29,8 @@ Blog</a>
 <div>Smartpdater State: <span class="su" id="statusSU"></span></div>
 <br/>
 
-<input id="stopSU" onclick='$("#example1").smartupdaterStop();' title="click to Stop" type="button" value="Stop">
-<input  id="restartSU" onclick='$("#example1").smartupdaterRestart();' title="reset poll interval to minTimeout and restart polling" type="button" value="Restart" />
+<input id="stopSU"    onclick='$("#example1").smartupdaterStop(); updateStatus()'    title="Click to Stop" type="button" value="Stop">
+<input id="restartSU" onclick='$("#example1").smartupdaterRestart(); updateStatus()' title="Click to run"  type="button" value="Restart" />
 <p><div class="code"><code>	
 		$("#example1").smartupdater({<br/>
 &nbsp;&nbsp;			url : 'gettime.php',<br/>
@@ -62,21 +62,23 @@ lets you to stop polling and continue it as needed.
 &copy;2010 Vadim Kiryukhin </div>
 
 <script type="text/javascript">
-$(document).ready(function()
-{ 
+//$(document).ready(function()
+//{ 
 		$("#example1").smartupdater({
 			url : 'gettime.php',
-			data:{"cmd":"payee","value":7},
 			minTimeout: 2000 // 2 seconds
 			}, function (data) {
 				$("#example1").html(data);
 			}
 		);
 		
+		
+		
+		updateStatus();
 		//Let's check Smartupdater status every 1 second
-		setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus.state)',1000);
-		var junk = 0;
-});
+		//setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus.state)',1000);
+		//var junk = 0;
+//});
 
 
 

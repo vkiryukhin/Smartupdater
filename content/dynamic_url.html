@@ -1,0 +1,74 @@
+<!-- ======================= Header ================================= -->
+
+<h3>Dynamic URL</h3>
+<!-- ======================= Left Panel ================================= -->
+
+<div id="leftpanel">
+
+	<div id="demopanel">
+
+		<div>Time on server: <span class="data" id='example1'></span></div>
+<br/>
+
+<input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdaterAlterUrl("php/getsecreverse.php").smartupdaterRestart();' />
+
+
+
+	</div> <!-- /demopanel -->
+
+<div id="codepanel" >
+
+<div class="codecontrol" onclick="$(this).siblings().toggle();">[ view code ]</div> 
+<div class="codesource" >
+<div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
+<pre>
+&lt;input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /&gt;
+&lt;input type="button" value="getsecreverse.php" onclick='$("#example1").
+							smartupdaterAlterUrl("php/getsecreverse.php").
+							smartupdaterRestart();' /&gt;
+
+$("#example1").smartupdater({
+    url : 'php/getsec.php',
+    minTimeout: 2000 // 2 seconds
+    }, function (data) {
+        $("#example1").html(data);
+    }
+);
+
+</pre>
+</div>
+</div> <!-- /codepanel -->
+</div> <!-- /leftpanel -->
+
+
+<!-- ======================= Right Panel ================================= -->    
+<div id="rightpanel">
+
+<p>
+Another case: depend on current layout, state, user preferences or other conditions you want to request different data.
+For example, user iconized module: you don't need request regular data any more, but want to poll alerts or notification only.
+With Smartupdater you can easily swithch among multiple URLs, which makes your code very modular, flexible and clean. 
+</p>
+<p>In this example you can poll eather regular getsec.php or funny reverse date layout.  It's not necessary to restart smartupdater after it was 
+altered, but if you want to update view immediately, do restart it.
+
+</p>
+
+
+
+</div> <!-- /rightpanel -->
+<!-- ======================= End HTML ================================= -->
+<script type="text/javascript">
+
+	$("#example1").smartupdater({
+		url : 'php/getsec.php',
+		minTimeout: 2000 // 2 seconds
+		}, function (data) {
+			$("#example1").html(data);
+		}
+	);
+	
+</script>
+
+</div/>

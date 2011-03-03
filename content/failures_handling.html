@@ -1,5 +1,5 @@
 <!-- ======================= Header ================================= -->
-<h3>Stop and Continue</h3>
+<h3>Failures Handling</h3>
 <!-- ======================= Left Panel ================================= -->
 
 <div id="leftpanel">
@@ -10,7 +10,6 @@
 		<div>Smartpdater State: <span class="data" id="statusSU"></span></div>
 		<br/>
 
-		<input onclick='$("#example1").smartupdaterStop(); updateStatus();' type="button" value="Stop" />
 		<input onclick='$("#example1").smartupdaterRestart(); updateStatus();' type="button" value="Restart" />
 	</div> <!-- /demopanel -->
 
@@ -24,14 +23,14 @@
 &lt;div id="statusSU"&gt;&lt;/div&gt;
 
 $("#example1").smartupdater({
-	url : 'php/getsec.php',
-	minTimeout: 2000 // 2 seconds
+	url : 'php/fake.php',
+	maxFailedRequests : 6,
+	minTimeout: 5000 // 5 seconds
 	}, function (data) {
 		$("#example1").html(data);
 	}
 );
 	
-&lt;input onclick='$("#example1").smartupdaterStop();'    type="button" value="Stop"    /&gt;
 &lt;input onclick='$("#example1").smartupdaterRestart();' type="button" value="Restart" /&gt;
 
 </pre>
@@ -44,21 +43,23 @@ $("#example1").smartupdater({
 <div id="rightpanel">
 
 
-Sometimes you want to stop polling and continue it later. For example if user minimizes an active object or enlarges another object which covers the active one you don't want to to keep polling as it simply wasting both server and client resourses. Smartupdater lets you to stop polling and continue it as needed.
-
+<p>If for some reasons URL doesn't respose, you don't want to continue to poll it, right? Smartupdater takes care of it. Use "maxFailedRequests" option to set max allowed number of consecutive ajax failures and Smartupdater stops polling after this number of faild requests</p>
+<p>In this example maxFailedRequests is set to 8, Smartupdater polls url which doesn't exist and gets errors as return. It stops after 6 polling cycles (30 sec). </p>
 
 </div> <!-- /rightpanel -->
 <!-- ======================= End HTML ================================= -->
 <script type="text/javascript">
 		$("#example1").smartupdater({
-			url : 'php/getsec.php',
-			minTimeout: 2000 // 2 seconds
+			url : 'php/fake.php',
+			maxFailedRequests 	: 6,
+			minTimeout: 5000 // 2 seconds
 			}, function (data) {
 				$("#example1").html(data);
 			}
 		);
 		
-		 updateStatus();
+		 //updateStatus();
+		 setInterval('updateStatus();',1000);
 		
 </script>
 </div/>

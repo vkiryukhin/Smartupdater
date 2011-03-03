@@ -1,0 +1,103 @@
+<!-- ======================= Header ================================= -->
+
+<h3>Complex Alternation</h3>
+
+<!-- ======================= Left Panel ================================= -->
+
+<div id="leftpanel">
+
+	<div id="demopanel">
+
+		<div>Time on server: <span class="data" id='example1'></span></div>
+<br/>
+
+<input type="button" value="default" onclick='configDefault()' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="getmin.php / foo( )" onclick='configAlter()' />
+
+
+
+	</div> <!-- /demopanel -->
+
+<div id="codepanel" >
+
+<div class="codecontrol" onclick="$(this).siblings().toggle();">[ view code ]</div> 
+<div class="codesource" >
+<div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
+<pre>
+&lt;span class="data" id='example1'&gt;&lt;/span&gt;
+&lt;input type="button" value="default" onclick='configDefault()' /&gt;
+&lt;input type="button" value="getmin.php/foo( )" onclick='configAlter()'  /&gt;
+
+$("#example1").smartupdater({
+	url : 'php/getsec.php',
+	minTimeout: 2000 // 2 seconds
+	}, function (data) {
+		$("#example1").html(data);
+	}
+);
+
+function configDefault() {
+	$("#example1").smartupdaterAlterCallback().smartupdaterAlterUrl().smartupdaterRestart();
+}
+function configAlter() {
+	$("#example1").smartupdaterAlterCallback(foo).smartupdaterAlterUrl("php/getmin.php").smartupdaterRestart();
+}
+function foo(data) {
+	$("#example1").html("foo ( "+data.split(":").reverse().join(":")+ " )");
+}
+</pre>
+</div>
+</div> <!-- /codepanel -->
+</div> <!-- /leftpanel -->
+
+
+<!-- ======================= Right Panel ================================= -->    
+<div id="rightpanel">
+
+
+
+<p>
+Complex alternation let you  to assosiate URL with dedicated callback function and dynamically apply this configuration. 
+For example, if your module is opened, you poll url "getData.php" and process result with callback function "processData()". 
+But if the module is minimized, you poll url "getAlert.php" and process result with callback function "processAlert()".
+Using this feature you easily can create event-driven polling engine. 
+</p>
+<p>In this example you can see how to switch between two smartupdater configurations. 
+It's not necessary to restart smartupdater after it was 
+altered, but if you want to update view immediately, do restart it.
+
+</p>
+
+
+
+</div> <!-- /rightpanel -->
+<!-- ======================= End HTML ================================= -->
+<script type="text/javascript">
+
+	$("#example1").smartupdater({
+		url : 'php/getsec.php',
+		minTimeout: 2000 // 2 seconds
+		}, function (data) {
+			$("#example1").html(data);
+		}
+	);
+	
+	function configDefault()
+	{
+		$("#example1").smartupdaterAlterCallback().smartupdaterAlterUrl().smartupdaterRestart();
+	}
+	
+	function configAlter()
+	{
+		$("#example1").smartupdaterAlterCallback(foo).smartupdaterAlterUrl("php/getmin.php").smartupdaterRestart();
+	}
+	
+	function foo(data) 
+	{
+		$("#example1").html("foo ( "+data.split(":").reverse().join(":")+ " )");
+	}
+	
+
+</script>
+
+</div/>

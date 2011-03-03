@@ -1,5 +1,5 @@
 <!-- ======================= Header ================================= -->
-<h3>HTTP cache (304 Not Modified)</h3>
+<h3>Smart Updating</h3>
 
 <!-- ======================= Left Panel ================================= -->
 
@@ -36,30 +36,13 @@ $("#example1").smartupdater({
 
 <!-- ======================= Right Panel ================================= -->    
 <div id="rightpanel">
-<p>
-This feature let you to save traffic significantely. It allows the request to be successful only if 
-the response has changed since the last request. This is done by checking the Last-Modified header. 
-This technique also checks the 'etag' specified by the server to catch unmodified data.
-</p>
-<p>
-Those who are familiar with HTTP caching and already looked into the smartupdxater source probable would 
-like to ask me a couple of questions:
-</p><p>
-Q. jQuery AJAX already has "ifModified" option to activate http cache feature. 
-So, why do you re-invent the wheel?
-<br/>
-A. There is a bug in jQuery AJAX engine ( <a href="http://bugs.jquery.com/ticket/8095" target="_blank">http://bugs.jquery.com/ticket/8095</a> ) and Smartupdater simply can't use this option.
-</p><p>
-Q. You are talking about "304 Not Modified" http header, right? But neither your code example, nor your live demo 
-shows any "304 Not Modified" http headers. LOL :)
-<br/>
-A. Yes, it's funny :) But there is another jQuery AJAX bug (or maybe not bug, but problem which is known as "Opera issue"). 
-Briefly, the problem is:  Opera's xhr object returns "304 Not Modified" header in non-standard format, so that jQuery AJAX engine  
-can't interpret it correctly.
-That's why to avoid using "304" header, I have to implement caching algotrithm directly in Smartupdater.
 
 
-</p>
+It is a very basic feature. If data isn't changed, Smartupdater doesn't update client side GUI. 
+It simply doesn't call callback function. 
+In this example server returns hours and minutes, so data from server is changed every minute. Because I set poll 
+interval 5 sec. server returns the same data 11 times. But Smartupdater ignors the data and doesn't update view. 
+You can clear input field or type something in it to see that date is refreshed 1 time in a minute
 
 
 </div> <!-- /rightpanel -->

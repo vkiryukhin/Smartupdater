@@ -25,7 +25,9 @@
 *		$("#myObject").smartupdaterStop();
 *		$("#myObject").smartupdaterRestart();
 *		$("#myObject").smartupdaterSetTimeout();
-*		$("#myObject").smartupdaterSetUrl();
+		$("#myObject").smartupdaterAlter();
+*		$("#myObject").smartupdaterAlterUrl();
+*		$("#myObject").smartupdaterAlterCallback();
 *
 *	Public Attributes:
 *		var smStatus = $("#myObject")[0].smartupdaterStatus.state; // "ON" | "OFF" | "undefined"
@@ -171,6 +173,7 @@
     jQuery.fn.smartupdaterRestart = function () {        
 		return this.each(function () {
 			clearTimeout(this.settings.h);
+			this.settings.failedRequests = 0;
  			this.settings.etag = "0";
 			this.settings.lastModified = "0";
 			this.settings.fnStart();
@@ -185,11 +188,16 @@
 		});
 	}; 
 	
-	jQuery.fn.smartupdaterAlter = function (url,data,callback) {
+	jQuery.fn.smartupdaterAlterCallback = function (callback) {
+		return this.each(function () {
+			this.settings.callback  = callback	? callback 	: this.settings.origReq.callback;
+ 		});
+	}; 
+	
+	jQuery.fn.smartupdaterAlterUrl = function (url,data) {
 		return this.each(function () {
 			this.settings.url 	= url 	? url 		: this.settings.origReq.url;
 			this.settings.data	= data 	? data 		: this.settings.origReq.data;
-			this.settings.callback  = callback	? callback 	: this.settings.origReq.callback;
  		});
 	}; 
 	
