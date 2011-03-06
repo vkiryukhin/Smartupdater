@@ -1,3 +1,84 @@
-<div>
-remote_timeout.html
+<!-- ======================= Header ================================= -->
+<h3>Remote Timeout</h3>
+<!-- ======================= Left Panel ================================= -->
+
+<div id="leftpanel">
+
+	<div id="demopanel">
+
+		<div>Time on server: <span class="data" id='example1'></span></div>
+		<br/>
+		<div>Timeout: <span class="data" id="statusSU"></span> msec</div>
+<br/>
+
+	</div> <!-- /demopanel -->
+
+<div id="codepanel" >
+
+<div class="codecontrol" onclick="$(this).siblings().toggle();">[ view code ]</div> 
+<div class="codesource" >
+<div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
+<pre>
+&lt;span class="data" id='example1'&gt;&lt;/span&gt;
+
+$("#example1").smartupdater({
+	url : 'php/remote_timeout.php',
+	minTimeout: 5000 // 5 seconds
+	}, function (data) {
+		$("#example1").html(data);
+	}
+);
+<div class="php_code">
+&lt;?php 
+    $timeout = (date(i)%2) ? 5000 : 20000;
+    $xheader = '{"timeout":"'.$timeout.'"}';
+    header("X-Smartupdater:$xheader");
+    echo  date('h:i');
+?&gt;	
+</div>
+</pre>
+</div>
+</div> <!-- /codepanel -->
+</div> <!-- /leftpanel -->
+
+
+<!-- ======================= Right Panel ================================= -->    
+<div id="rightpanel">
+
+
+
+<p>Everybody who has deal with polling systems knows, that server can be easily overloaded with client-side requests, so we try to set polling period as low as possible. But if number users grows, we have to either increase polling period and make our application less dynamic or spend money on either upgrading hardware or buying additional resurces from service provider.  </p>
+<p>
+Smartupdater lets you to re-programm timeout from a server. 
+<ul>
+<li>If server is overloaded with user's requests, it can 
+increase polling period. </li>
+<li>An opposit case: for some reason data is changing more quickly then usually, but current polling period is too long, so that user is loosing important data. In this case server can decrease polling period and returns to regular rate later. </li>
+</ul>
+</p>
+In this example server checks current minute and if it even sets timeout to 20 sec., 
+and if it odd sets it to 5 sec (shown in miliseconds).
+</p><p>
+To implement this feature Smartupdater uses custom HTTP header <code>"X-Smartupdater"</code>. 
+Value for the header is built in JSON format
+</p>
+
+</div> <!-- /rightpanel -->
+<!-- ======================= End HTML ================================= -->
+<script type="text/javascript">
+
+	$("#example1").smartupdater({
+		url : 'php/remote_timeout.php',
+		minTimeout: 5000 // 5 seconds
+		}, function (data) {
+			$("#example1").html(data);
+		}
+	);
+		
+	updateTimeoutStatus("t");
+	
+	hInterval = setInterval('updateTimeoutStatus("t");',1000);
+		
+</script>
+
 </div/>

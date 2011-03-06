@@ -21,13 +21,24 @@
 &lt;input id="example1" type="text" value="" /&gt;
 
 $("#example1").smartupdater({
-	url : 'php/getmin.php',
-	minTimeout: 5000 // 5 seconds
+	url : 'php/getmin_cache_etag.php',
+	minTimeout: 5000, // 5 seconds <span class="option">
+	httpCache: true </span>
 	}, function (data) {
 		$("#example1").val(data);
 	}
 );
-	
+
+<div class="php_code">
+&lt;?php 
+    $servertime = date('h:i');
+    $checksum = md5($servertime);
+    header("ETag:$checksum");
+    if($checksum != $_SERVER['HTTP_IF_NONE_MATCH']) {
+        echo $servertime;
+    }
+?&gt;	
+</div>
 </pre>
 </div>
 </div> <!-- /codepanel -->
@@ -37,45 +48,53 @@ $("#example1").smartupdater({
 <!-- ======================= Right Panel ================================= -->    
 <div id="rightpanel">
 <p>
-This feature let you to save traffic significantely. It allows the request to be successful only if 
+This feature let you to save traffic. It allows the request to be successful only if 
 the response has changed since the last request. This is done by checking the Last-Modified header. 
 This technique also checks the 'etag' specified by the server to catch unmodified data.
 </p>
 <p>
-Those who are familiar with HTTP caching and already looked into the smartupdxater source probable would 
+Those who are familiar with HTTP caching and already looked into the smartupdater source probable would 
 like to ask me a couple of questions:
-</p><p>
-Q. jQuery AJAX already has "ifModified" option to activate http cache feature. 
-So, why do you re-invent the wheel?
-<br/>
-A. There is a bug in jQuery AJAX engine ( <a href="http://bugs.jquery.com/ticket/8095" target="_blank">http://bugs.jquery.com/ticket/8095</a> ) and Smartupdater simply can't use this option.
-</p><p>
-Q. You are talking about "304 Not Modified" http header, right? But neither your code example, nor your live demo 
-shows any "304 Not Modified" http headers. LOL :)
-<br/>
-A. Yes, it's funny :) But there is another jQuery AJAX bug (or maybe not bug, but problem which is known as "Opera issue"). 
-Briefly, the problem is:  Opera's xhr object returns "304 Not Modified" header in non-standard format, so that jQuery AJAX engine  
-can't interpret it correctly.
-That's why to avoid using "304" header, I have to implement caching algotrithm directly in Smartupdater.
-
-
 </p>
-
+<br/>
+<p>
+<b>Q.</b><i> jQuery AJAX already has "ifModified" option to activate http cache feature. 
+So, why do you re-invent the wheel?</i>
+<br/><br/>
+<b>A.</b> There is a bug in jQuery AJAX engine ( <a href="http://bugs.jquery.com/ticket/8095" target="_blank">http://bugs.jquery.com/ticket/8095</a> ) and Smartupdater simply can't use this option.
+</p><p>
+<b>Q.</b><i> You are talking about "304 Not Modified" http header, right? But neither your code example, nor your live demo 
+shows any "304 Not Modified" http headers. LOL :)</i>
+<br/><br/>
+<b>A.</b> Yes, it's funny :) But there is another jQuery AJAX bug (or maybe not bug, but problem which is known as "Opera issue"). 
+Briefly, the problem is:  Opera's xhr object returns "304 Not Modified" header in non-standard format, so that jQuery AJAX engine can't interpret it correctly. That's why to avoid using "304" header, I have to implement caching algotrithm directly in Smartupdater.
+</p>
+<br/>
+<p>Please pay attention to the PHP code: Server doesn't send "304 Not Modified" header, but includes <b>ETag</b> header 
+in each reply. Smartupdater gets this <b>ETag</b>, compares with previous one and if they are equal, process responce 
+as if it gets "304 Not Modified" header.
+</p>
+<p>
+Two http headers are used by Smartupdater to implement this feature: 
+( <b>ETag / If-None-Match</b>)  and ( <b>Last-Modified / If-Modified-Since</b>). They are processed identically, but <b>ETag</b> is more 
+sutable for cache validation (check if content is the same), while <b>Last-Modified</b> more sutable for checking cache
+ freshness ( check content time or revision number).  
+</p><p>
+ Server sends headers <b>ETag</b> or <b>Last-Modified</b> and Smartupdater returns the data in <b>If-None-Match</b> or <b>If-Modified-Since</b> headers.
+</p>
+Open debugger and check network activity. You see, that client sends requests every 5 seconds, but server responses with actual data only onece in a minute. The rest server's responses have header and empty message body. 
 
 </div> <!-- /rightpanel -->
 <!-- ======================= End HTML ================================= -->
 <script type="text/javascript">
 		$("#example1").smartupdater({
-			url : 'php/getmin.php',
-			minTimeout: 5000 // 5 seconds
+			url : 'php/getmin_cache_etag.php',
+			minTimeout: 5000, // 5 seconds
+			httpCache: true
 			}, function (data) {
 				$("#example1").val(data);
 			}
 		);
 		
-		 updateStatus();
-		
-		//Let's check Smartupdater status every 1 second
-		//hInterval = setInterval('$("#statusSU").html($("#example1")[0].smartupdaterStatus.state)',1000);
 </script>
 </div/>

@@ -23,8 +23,8 @@
 &lt;div id="statusSU"&gt;&lt;/div&gt;
 
 $("#example1").smartupdater({
-	url : 'php/fake.php',
-	maxFailedRequests : 6,
+	url : 'php/fake.php',<span class="option">
+	maxFailedRequests : 6,</span>
 	minTimeout: 5000 // 5 seconds
 	}, function (data) {
 		$("#example1").html(data);
@@ -58,8 +58,8 @@ $("#example1").smartupdater({
 			}
 		);
 		
-		 //updateStatus();
-		 setInterval('updateStatus();',1000);
+		 updateStatus();
+		 hInterval = setInterval('updateStatus();',1000);
 		
 </script>
 </div/>
