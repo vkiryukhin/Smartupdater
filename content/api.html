@@ -1,3 +1,314 @@
-<div>
-api.html
-</div/>
+<div id="apiDoc">
+<h4>List of available  functions</h4>
+<ul>
+<li>
+	<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		<code>smartupdaterStop()</code> - to stop polling
+			<div class="apiDetails">
+			<code>$("#example1").smartupdaterStop();</code>
+			</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterRestart()</code> to run polling again
+<div class="apiDetails">
+			<code>$("#example1").smartupdaterRestart();</code>
+			</div>
+	</span>
+
+</li>
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterSetTimeout()</code> - to set a new polling interval
+<div class="apiDetails">
+
+			<p><code>$("#example1").smartupdaterSetTimeout(timeout);</code></p>
+			<p>timeout is set in miliseconds</p>
+			
+			
+			</div>
+	</span>
+
+</li>
+
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterAlterUrl()</code> - to alter URL and/or callback function
+<div class="apiDetails">
+
+			<p><code>$("#example1").smartupdaterAlterUrl(url[,data])</code></p>
+	<div><code>url</code> - new URL</div>
+	<div><code>data</code> - Data to be sent to the server with this URL, optional</div>
+<p>
+	<ul style="list-style-type:disc;">
+	<li>
+	<p>to change URL:</p>
+	<code>$("#example1").smartupdaterAlterUrl("foobar.php")</code>
+	</li>
+	<li>
+	<p>to change URL and data which is appended to the url for GET/POST request:</p>
+	<code>$("#example1").smartupdaterAlterUrl("foobar.php",{"foo":"bar"})</code>
+	 </li>
+	<li>
+	<p>to change only data which is append to the current url for GET/POST request</p>
+	<code>$("#example1").smartupdaterAlterUrl(false,{"foo":"bar"})</code>
+	</li><li>
+	<p>to return to default set</p>
+	<code>$("#example1").smartupdaterAlterUrl(false,false)</code>
+	</li>
+	</ul>
+	</p>
+			
+
+	</span>
+
+
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterAlterCallback()</code> - to alter URL and/or callback function
+<div class="apiDetails">
+			<p>
+	<ul style="list-style-type:disc;">
+	<li>
+	<p>to change callback function:</p>
+	<code>$("#example1").smartupdaterAlterCallback(foo);</code>
+	</li>
+	<li>
+	<p>to return to default callback function:</p>
+	<code>$("#example1").smartupdaterAlterCallback(false);</code>
+	 </li>
+	</ul>
+	</p>
+			
+			
+			</div>
+	</span>
+</li>
+
+
+</ul>
+
+<h4>List of available  attributes</h4>
+<ul>
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterStatus.state</code> current state ( ON | OFF )
+<div class="apiDetails">
+			<code>var state = $("#example1")[0].smartupdaterStatus.state</code>
+			</div>
+	</span>
+
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>smartupdaterStatus.timeout</code> current timeout
+<div class="apiDetails">
+			<code>var timeout = $("#example1")[0].smartupdaterStatus.timeout</code>
+			</div>
+	</span>
+
+</li>
+</ul>
+
+<h4>List of available options</h4>
+<ul>
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>url</code> - URL for the ajax request. (Required!)
+<div class="apiDetails">
+			(see jQuery.ajax for details)
+			</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>type</code> - Can be either GET or POST
+<div class="apiDetails">
+			(see jQuery.ajax for details)
+			</div>
+	</span>
+
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>data</code> - Array of values to be passed to the page
+<div class="apiDetails">
+			(see jQuery.ajax for details)
+			</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>dataType</code> - Response type; can be text, xml, json etc.
+<div class="apiDetails">
+			(see jQuery.ajax for details)
+			</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>minTimeout</code> - Value for the timeout, in milliseconds.
+<div class="apiDetails">
+<code>
+<pre>$("#example1").smartupdater({
+    url : 'foo.php',<span class="option">
+    minTimeout: 60000, 	// 1 minute by default</span>
+    }, function (data) {
+        ...
+    }
+);</pre>
+</code>
+			</div>
+	</span>
+
+</li>
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>maxFailedRequests</code> - smartupdater stops after this number of consecutive ajax failures;
+<div class="apiDetails">
+<code>
+<pre>$("#example1").smartupdater({
+	url : 'fake.php',<span class="option">
+	maxFailedRequests : 10, // default is 10</span>
+	}, function (data) {
+		...
+	}
+);
+</pre>
+</code>
+<p>to stop after the first failed attempt set <code>maxFailedRequests:0</code></p>
+			</div>
+	</span>
+</li>
+			
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>httpCache</code> - Activate http caching feature
+<div class="apiDetails">
+<pre>
+$("#example1").smartupdater({
+    url : 'foo.php',<span class="option">
+    httpCache: true </span>
+    }, function (data) {
+       ...
+    }
+);
+</pre>
+<p>Default: <code>httpCache: false</code> </p>
+
+	<ul style="list-style-type:disc;">
+	<li>
+	<p>validation header:<br/>
+	Server sends <code>ETag</code>, Smartupdater returns <code>If-None-Match</code></p>
+	</li>
+	<li>
+	<p>freshness header:<br/>
+	Server sends <code>Last-Modified</code>, Smartupdater returns <code>If-Modified-Since</code></p>
+	 </li>
+	</ul>
+	
+	Server doesn't need to send <code>304 Not Modified<code> header to Smartupdater.
+			
+	</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>rCallback</code> - List of callback functions which are allowed to run remotely from server
+<div class="apiDetails">
+<code>
+<pre>$("#example1").smartupdater({
+	url : 'foo',<span class="option">
+	rCallback: 'foo,bar' </span>
+	}, function (data) {
+		...
+	}
+);
+</pre>
+</code>
+<p>There is no restriction on number of callback function in the list.<br/>
+Default: <code>rCallback:false</code></p>
+<p>
+php code to set remote callback function:</p>
+<p>
+ <code>$xheader = '{"callback":"foo"}';<br/>
+    header("X-Smartupdater:$xheader");</code>
+
+</p>
+
+</div>
+	</span>
+</li>
+</ul>
+
+<h4>List of available  features</h4>
+<ul>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>Remote Timeout</code> - Set timeout remotely from server
+<div class="apiDetails">
+no Smartupdater setting is needed
+<p>
+php code to set remote timeout:<br/><br/>
+ <code>$xheader = '{"timeout":"60000"}';<br/>
+    header("X-Smartupdater:$xheader");</code>
+
+</p>
+
+</div>
+	</span>
+</li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+<code>Feedback</code> - Smartupdater automatically sends its current timeout to server
+<div class="apiDetails">
+no Smartupdater setting is needed
+<p>
+custom http header:<br/><br/>
+<b>header name:</b> X-Smartupdater<br/>
+<b>data:</b> JSON<br/><br/>
+Example, how Smartupdater builds this header:<br/>
+<code>xhr.setRequestHeader("X-Smartupdater", '{"timeout":"60000"}');
+</code>
+</p>
+
+</div>
+	</span>
+</li>
+</ul>
+
+
+
+
+
+</div>

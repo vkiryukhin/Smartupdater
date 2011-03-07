@@ -13,8 +13,6 @@
 <input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
 <input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdaterAlterUrl("php/getsecreverse.php").smartupdaterRestart();' />
 
-
-
 	</div> <!-- /demopanel -->
 
 <div id="codepanel" >
@@ -23,14 +21,17 @@
 <div class="codesource" >
 <div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
 <pre>
-&lt;input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /&gt;
+&lt;input type="button" value="default" onclick='$("#example1").
+            smartupdaterAlterUrl().
+            smartupdaterRestart();' /&gt;
+			
 &lt;input type="button" value="getsecreverse.php" onclick='$("#example1").
-							smartupdaterAlterUrl("php/getsecreverse.php").
-							smartupdaterRestart();' /&gt;
+            smartupdaterAlterUrl("php/getsecreverse.php",{"arg":"admin","value":0}).
+            smartupdaterRestart();' /&gt;
 
 $("#example1").smartupdater({
     url : 'php/getsec.php',
-    minTimeout: 2000 // 2 seconds
+    minTimeout: 5000 // 2 seconds
     }, function (data) {
         $("#example1").html(data);
     }
@@ -48,9 +49,9 @@ $("#example1").smartupdater({
 <p>
 Another case: depend on current layout, state, user preferences or other conditions you want to request different data.
 For example, user iconized module: you don't need request regular data any more, but want to poll alerts or notification only.
-With Smartupdater you can easily swithch among multiple URLs, which makes your code very modular, flexible and clean. 
+With Smartupdater you can easily switch  among multiple URLs, which makes your code very modular, flexible and clean. 
 </p>
-<p>In this example you can poll eather regular getsec.php or funny reverse date layout.  It's not necessary to restart smartupdater after it was 
+<p>In this example you can poll either  regular getsec.php or funny reverse date layout.  It's not necessary to restart smartupdater after it was 
 altered, but if you want to update view immediately, do restart it.
 
 </p>
@@ -63,7 +64,7 @@ altered, but if you want to update view immediately, do restart it.
 
 	$("#example1").smartupdater({
 		url : 'php/getsec.php',
-		minTimeout: 2000 // 2 seconds
+		minTimeout: 5000 // 2 seconds
 		}, function (data) {
 			$("#example1").html(data);
 		}

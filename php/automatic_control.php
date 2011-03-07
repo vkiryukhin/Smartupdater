@@ -6,8 +6,8 @@
 	if ( (int)$aSmartupdater["timeout"] < 5000) {
 		$xheader = '{"timeout":"5000"}';
 	} 
-	if ((int)$aSmartupdater["timeout"] > 20000 ) {
-		$xheader = '{"timeout":"20000"}';
+	if ((int)$aSmartupdater["timeout"] > 15000 ) {
+		$xheader = '{"timeout":"15000"}';
 	}
 	
 	if($xheader) {

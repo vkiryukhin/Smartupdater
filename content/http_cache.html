@@ -67,22 +67,22 @@ So, why do you re-invent the wheel?</i>
 shows any "304 Not Modified" http headers. LOL :)</i>
 <br/><br/>
 <b>A.</b> Yes, it's funny :) But there is another jQuery AJAX bug (or maybe not bug, but problem which is known as "Opera issue"). 
-Briefly, the problem is:  Opera's xhr object returns "304 Not Modified" header in non-standard format, so that jQuery AJAX engine can't interpret it correctly. That's why to avoid using "304" header, I have to implement caching algotrithm directly in Smartupdater.
+Briefly, the problem is:  Opera's xhr object returns "304 Not Modified" header in non-standard format, so that jQuery AJAX engine can't interpret it correctly. That's why to avoid using "304" header, I have to implement caching algorithm directly in Smartupdater.
 </p>
 <br/>
-<p>Please pay attention to the PHP code: Server doesn't send "304 Not Modified" header, but includes <b>ETag</b> header 
-in each reply. Smartupdater gets this <b>ETag</b>, compares with previous one and if they are equal, process responce 
+<p>Please pay attention to the PHP code: Server doesn't send "304 Not Modified" header, but includes <code>ETag</code> header 
+in each reply. Smartupdater gets this <code>ETag</code>, compares with previous one and if they are equal, process response 
 as if it gets "304 Not Modified" header.
 </p>
 <p>
 Two http headers are used by Smartupdater to implement this feature: 
-( <b>ETag / If-None-Match</b>)  and ( <b>Last-Modified / If-Modified-Since</b>). They are processed identically, but <b>ETag</b> is more 
-sutable for cache validation (check if content is the same), while <b>Last-Modified</b> more sutable for checking cache
+( <code>ETag / If-None-Match</code>)  and ( <code>Last-Modified / If-Modified-Since</code>). They are processed identically, but <code>ETag</code> is more 
+suitable  for cache validation (check if content is the same), while <code>Last-Modified</code> more suitable  for checking cache
  freshness ( check content time or revision number).  
 </p><p>
- Server sends headers <b>ETag</b> or <b>Last-Modified</b> and Smartupdater returns the data in <b>If-None-Match</b> or <b>If-Modified-Since</b> headers.
+ Server sends headers <code>ETag</code> or <code>Last-Modified</code> and Smartupdater returns the data in <code>If-None-Match</code> or <code>If-Modified-Since</code> headers.
 </p>
-Open debugger and check network activity. You see, that client sends requests every 5 seconds, but server responses with actual data only onece in a minute. The rest server's responses have header and empty message body. 
+Open debugger and check network activity. You see, that client sends requests every 5 seconds, but server responses with actual data only once  in a minute. The rest server's responses have header and empty message body. 
 
 </div> <!-- /rightpanel -->
 <!-- ======================= End HTML ================================= -->

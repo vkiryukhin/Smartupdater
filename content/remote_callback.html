@@ -55,11 +55,11 @@ function bar(data) {
 
 
 
-<p>Data structure and data format which server sends to client can vary. For example, server sends client only new data it gets since last response. But ocassionally old data can be changed (something deleted or modified) and server need a way to instruct client to process this particular piece of data differently.</p>
+<p>Data structure and data format which server sends to client can vary. For example, server sends client only new data it gets since last response. But occasionally  old data can be changed (something deleted or modified) and server need a way to instruct client to process this particular piece of data differently.</p>
 <p>
 <p>Smartupdater lets you to set callback function from a server. </p>
 
-<p>Instead of adding extra field (command field) to the data frame, parse the field on client side, extruct command and process data according this command, you can simply instruct Smartupdater which callback function should process this piece of data.</p>
+<p>Instead of adding extra field (command field) to the data frame, parse the field on client side, extract  command and process data according this command, you can simply instruct Smartupdater which callback function should process this piece of data.</p>
 <p>
 In this example server checks current seconds and if it less then 40 sec. function <code>foo()</code> as a callback function, otherwise function <code>bar()</code> is set.
 </p><p>

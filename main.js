@@ -6,6 +6,9 @@ $(document).ready(function()
 	$('li[data-content]').bind('click', function(event) {
 		var url = $(this).attr('data-content');
 		clearInterval(hInterval);
+		$("#example1").smartupdaterStop();
+		$("#example1").remove();
+		
 		$.ajax( {
 			url: url,
 			dataType: "html",
@@ -38,5 +41,16 @@ function updateTimeoutStatus(mode)
 			$("#statusSU").html($("#example1")[0].smartupdaterStatus.timeout);
 	} else {
 		clearInterval(hInterval);
+	}
+}
+
+function toggleApiDetails(obj) {
+	var state = $(obj).children("img").attr("src");
+	if (state == "img/demo-spindown-closed.gif") {
+		$(obj).children("img").attr("src","img/demo-spindown-open.gif");
+		$(obj).children(".apiDetails").css("display","block");
+	} else {
+		$(obj).children("img").attr("src","img/demo-spindown-closed.gif");
+		$(obj).children(".apiDetails").css("display","none");
 	}
 }

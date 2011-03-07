@@ -76,3 +76,24 @@ a:visited {color:black;}
 	color:#0000ff; 
 	font-weight:bold;
 }
+
+#apiDoc {
+
+}
+#apiDoc ul {
+	list-style-type:none;
+}
+.apiDocToggleBtn {
+	margin-right:10px;
+}
+.apiDetails {
+	display:none;
+	background:#ffffd8;
+	margin:10px;
+	padding: 10px;
+	border:1px solid black;
+}
+.toggleApiDetails {
+	/*background-image: img/demo-spindown-closed.gif;*/
+	cursor:pointer; 
+}

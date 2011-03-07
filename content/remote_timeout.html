@@ -47,17 +47,17 @@ $("#example1").smartupdater({
 
 
 
-<p>Everybody who has deal with polling systems knows, that server can be easily overloaded with client-side requests, so we try to set polling period as low as possible. But if number users grows, we have to either increase polling period and make our application less dynamic or spend money on either upgrading hardware or buying additional resurces from service provider.  </p>
+<p>Everybody who has deal with polling systems knows, that server can be easily overloaded with client-side requests, so we try to set polling period as low as possible. But if number users grows, we have to either increase polling period and make our application less dynamic or spend money on either upgrading hardware or buying additional resources from service provider.  </p>
 <p>
-Smartupdater lets you to re-programm timeout from a server. 
+Smartupdater lets you to re-program timeout from a server. 
 <ul>
 <li>If server is overloaded with user's requests, it can 
 increase polling period. </li>
-<li>An opposit case: for some reason data is changing more quickly then usually, but current polling period is too long, so that user is loosing important data. In this case server can decrease polling period and returns to regular rate later. </li>
+<li>An opposed  case: for some reason data is changing more quickly then usually, but current polling period is too long, so that user is loosing important data. In this case server can decrease polling period and returns to regular rate later. </li>
 </ul>
 </p>
 In this example server checks current minute and if it even sets timeout to 20 sec., 
-and if it odd sets it to 5 sec (shown in miliseconds).
+and if it odd sets it to 5 sec (shown in milliseconds).
 </p><p>
 To implement this feature Smartupdater uses custom HTTP header <code>"X-Smartupdater"</code>. 
 Value for the header is built in JSON format
