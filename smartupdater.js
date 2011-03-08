@@ -6,7 +6,7 @@
 * Copyright (c) 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
-* http://www.eslinstructor.net/demo/smartupdater2/smartupdater_home.html
+* http://www.eslinstructor.net/smartupdater3/
 *
 * Dual licensed under the MIT and GPL licenses:
 *   http://www.opensource.org/licenses/mit-license.php
@@ -15,7 +15,7 @@
 * USAGE:
 *
 *	$("#myObject").smartupdater({
-*			url : "demo.php"
+*			url : "foo.php"
 *			}, function (data) {
 *				//process data here;
 *			}
@@ -25,13 +25,12 @@
 *		$("#myObject").smartupdaterStop();
 *		$("#myObject").smartupdaterRestart();
 *		$("#myObject").smartupdaterSetTimeout();
-		$("#myObject").smartupdaterAlter();
 *		$("#myObject").smartupdaterAlterUrl();
 *		$("#myObject").smartupdaterAlterCallback();
 *
 *	Public Attributes:
-*		var smStatus = $("#myObject")[0].smartupdaterStatus.state; // "ON" | "OFF" | "undefined"
-*		var smTimeout = $("#myObject")[0].smartupdaterStatus.timeout; // current timeout
+*		var smStatus = $("#myObject")[0].smartupdaterStatus.state; 
+*		var smTimeout = $("#myObject")[0].smartupdaterStatus.timeout;
 *
 **/
 
@@ -83,10 +82,10 @@
 						
 						if(xSmart) { // remote control 
 						
-							// remote timeout 
+							/* remote timeout */
 							es.minTimeout = xSmart.timeout ? xSmart.timeout : es.minTimeout;
 							
-							// remote callback
+							/* remote callback */
 							rCallback = xSmart.callback ? xSmart.callback : false;
 						}
 						
@@ -108,13 +107,13 @@
 									
 						} else { // data is changed 
 
-						// cache response data 
+						/* cache response data */
 							es.prevContent = xhr.responseText;
 							
-						// reset timeout 
+						/* reset timeout */
 							es.h = setTimeout(start, es.minTimeout);
 							
-						// run callback function 
+						/* run callback function */
 							if(es.rCallback && rCallback && es.rCallback.search(rCallback) != -1) {
 								window[rCallback](data);
 							} else  { 
@@ -129,13 +128,13 @@
 					error: function(xhr, textStatus, errorThrown) { 
 						if ( ++es.failedRequests < es.maxFailedRequests ) {
 						
-						// increment falure counter and reset timeout 
+						/* increment falure counter and reset timeout */
 							es.h = setTimeout(start, es.minTimeout);
 							elem.smartupdaterStatus.timeout = es.minTimeout;
 							
 						} else {
 						
-						// stop smartupdater
+						/* stop smartupdater */
 							clearTimeout(es.h);
 							elem.smartupdaterStatus.state = 'OFF';
 						}
@@ -145,12 +144,12 @@
 					
 						if(es.httpCache) {
 						
-						// set http cache-related headers 
+						/* set http cache-related headers */
 							xhr.setRequestHeader("If-None-Match", es.etag );
 							xhr.setRequestHeader("If-Modified-Since", es.lastModified );
 						}
 						
-					// Feedback: Smartupdater sends it's current timeout to server 
+					/* Feedback: Smartupdater sends it's current timeout to server */
 						xhr.setRequestHeader("X-Smartupdater", '{"timeout":"'+elem.smartupdaterStatus.timeout+'"}');
 					}
 				});
@@ -196,8 +195,8 @@
 	
 	jQuery.fn.smartupdaterAlterUrl = function (url,data) {
 		return this.each(function () {
-			this.settings.url 	= url 	? url 		: this.settings.origReq.url;
-			this.settings.data	= data 	? data 		: this.settings.origReq.data;
+			this.settings.url 	= url 	? url : this.settings.origReq.url;
+			this.settings.data	= data 	? data : this.settings.origReq.data;
  		});
 	}; 
 	

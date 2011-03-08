@@ -43,7 +43,7 @@ function updateTimeoutStatus(mode)
 		clearInterval(hInterval);
 	}
 }
-
+/*
 function toggleApiDetails(obj) {
 	var state = $(obj).children("img").attr("src");
 	if (state == "img/demo-spindown-closed.gif") {
@@ -51,6 +51,18 @@ function toggleApiDetails(obj) {
 		$(obj).children(".apiDetails").css("display","block");
 	} else {
 		$(obj).children("img").attr("src","img/demo-spindown-closed.gif");
+		$(obj).children(".apiDetails").css("display","none");
+	}
+}
+*/
+function toggleApiDetails(obj) {
+	var re = /closed/;
+	var state = $(obj).css("background-image");
+	if (state.search(re) != -1) {
+		$(obj).css("background-image",'url("img/demo-spindown-open.gif")');
+		$(obj).children(".apiDetails").css("display","block");
+	} else {
+		$(obj).css("background-image",'url("img/demo-spindown-closed.gif")');
 		$(obj).children(".apiDetails").css("display","none");
 	}
 }

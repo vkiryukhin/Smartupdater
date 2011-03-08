@@ -1,19 +1,17 @@
 <div id="apiDoc">
 <h4>List of available  functions</h4>
 <ul>
-<li>
-	<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
-		<code>smartupdaterStop()</code> - to stop polling
+<li class="toggleApiDetails" onclick="toggleApiDetails(this)">
+	<code>smartupdaterStop()</code> - to stop polling
 			<div class="apiDetails">
 			<code>$("#example1").smartupdaterStop();</code>
 			</div>
-	</span>
+	
 </li>
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		
 <code>smartupdaterRestart()</code> to run polling again
 <div class="apiDetails">
 			<code>$("#example1").smartupdaterRestart();</code>
@@ -23,7 +21,7 @@
 </li>
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		
 <code>smartupdaterSetTimeout()</code> - to set a new polling interval
 <div class="apiDetails">
 
@@ -39,7 +37,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>smartupdaterAlterUrl()</code> - to alter URL and/or callback function
 <div class="apiDetails">
 
@@ -74,7 +72,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>smartupdaterAlterCallback()</code> - to alter URL and/or callback function
 <div class="apiDetails">
 			<p>
@@ -102,7 +100,7 @@
 <ul>
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>smartupdaterStatus.state</code> current state ( ON | OFF )
 <div class="apiDetails">
 			<code>var state = $("#example1")[0].smartupdaterStatus.state</code>
@@ -113,7 +111,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>smartupdaterStatus.timeout</code> current timeout
 <div class="apiDetails">
 			<code>var timeout = $("#example1")[0].smartupdaterStatus.timeout</code>
@@ -127,7 +125,7 @@
 <ul>
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>url</code> - URL for the ajax request. (Required!)
 <div class="apiDetails">
 			(see jQuery.ajax for details)
@@ -137,7 +135,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>type</code> - Can be either GET or POST
 <div class="apiDetails">
 			(see jQuery.ajax for details)
@@ -148,7 +146,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>data</code> - Array of values to be passed to the page
 <div class="apiDetails">
 			(see jQuery.ajax for details)
@@ -158,7 +156,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>dataType</code> - Response type; can be text, xml, json etc.
 <div class="apiDetails">
 			(see jQuery.ajax for details)
@@ -168,7 +166,7 @@
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>minTimeout</code> - Value for the timeout, in milliseconds.
 <div class="apiDetails">
 <code>
@@ -186,7 +184,7 @@
 </li>
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>maxFailedRequests</code> - smartupdater stops after this number of consecutive ajax failures;
 <div class="apiDetails">
 <code>
@@ -206,7 +204,7 @@
 			
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>httpCache</code> - Activate http caching feature
 <div class="apiDetails">
 <pre>
@@ -231,7 +229,7 @@ $("#example1").smartupdater({
 	 </li>
 	</ul>
 	
-	Server doesn't need to send <code>304 Not Modified<code> header to Smartupdater.
+	Server doesn't need to send <code>304 Not Modified</code> header to Smartupdater.
 			
 	</div>
 	</span>
@@ -239,7 +237,7 @@ $("#example1").smartupdater({
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>rCallback</code> - List of callback functions which are allowed to run remotely from server
 <div class="apiDetails">
 <code>
@@ -272,7 +270,7 @@ php code to set remote callback function:</p>
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
+		  
 <code>Remote Timeout</code> - Set timeout remotely from server
 <div class="apiDetails">
 no Smartupdater setting is needed
@@ -289,7 +287,6 @@ php code to set remote timeout:<br/><br/>
 
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
-		<img class="apiDocToggleBtn" src="img/demo-spindown-closed.gif"/> 
 <code>Feedback</code> - Smartupdater automatically sends its current timeout to server
 <div class="apiDetails">
 no Smartupdater setting is needed

@@ -14,5 +14,4 @@
 		header("X-Smartupdater:$xheader");
 	}
 	echo  date('h:i:s');
-
 ?>

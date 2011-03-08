@@ -94,6 +94,8 @@ a:visited {color:black;}
 	border:1px solid black;
 }
 .toggleApiDetails {
-	/*background-image: img/demo-spindown-closed.gif;*/
+	background-image: url("img/demo-spindown-closed.gif");
+	background-repeat:no-repeat;
+	 padding-left: 15px;
 	cursor:pointer; 
 }

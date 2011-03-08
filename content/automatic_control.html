@@ -7,14 +7,12 @@
 	<div id="demopanel">
 
 		<div>Time on server: <span class="data" id='example1'></span></div> <br/>
-		<div>Timeout: <span class="data" id="statusTimeout"></span> msec</div>
+		<div>Timeout: <span class="data" id="statusSU"></span> msec</div>
 <br/>
 
 
 <input id="newTimeout" size="2" type="text" /> <b>sec.</b> &nbsp;
 <input type="button" value="set timeout" onclick="suSetTimeout()" />
-
-
 
 	</div> <!-- /demopanel -->
 
@@ -29,18 +27,38 @@
 &lt;input type="button" value="set timeout" onclick="suSetTimeout()" /&gt;
 
 $("#example1").smartupdater({
-    url : 'php/getsec.php',
+    url : 'php/automatic_control.php',
     minTimeout: 5000 // 5 seconds
     }, function (data) {
         $("#example1").html(data);
-    }
+     }
 );
-	
+
 function suSetTimeout() 
 {
-    var timeout = $("#newTimeout").val() * 1000;
-    $("#example1").smartupdaterSetTimeout(timeout);
+	var timeout = $("#newTimeout").val() * 1000;
+	if (timeout < 1000) timeout = 1000;
+	$("#example1").smartupdaterSetTimeout(timeout);
 }
+<div class="php_code">
+&lt;?php 
+/* get client's feedback */
+	$aSmartupdater = json_decode($_SERVER['HTTP_X_SMARTUPDATER'], true);
+	
+	$xheader = false;
+	if ( (int)$aSmartupdater["timeout"] < 5000) {
+		$xheader = '{"timeout":"5000"}';
+	} 
+	if ((int)$aSmartupdater["timeout"] > 15000 ) {
+		$xheader = '{"timeout":"15000"}';
+	}
+	
+	if($xheader) {
+		header("X-Smartupdater:$xheader");
+	}
+	echo  date('h:i:s');
+?&gt;
+</div>	
 </pre>
 </div>
 </div> <!-- /codepanel -->
@@ -52,8 +70,16 @@ function suSetTimeout()
 
 
 
-<p> At any time you can set any timeout which is right for current task your application is executing. See how it works in this demo. (Set interval in seconds, not miliseconds)</p>
-
+<p> OK. Now let's create something really cool. For example - automatic control system, similar to space missile  control... well, Volvo cruise control, why not? Maybe a bit simpler, however :)<br/>
+Sometimes, we want to keep clients' polling rate within pre-defined range to prevent server overloading from one hand and loosing customers data because of too slow polling from the other.
+</p>
+<p>
+As we know, key point for every automatic control system is feedback. And Smartupdater has this feature. Every cycle Smartupdater sends current polling rate to server and (as you already know) server can re-program Smartupdater (see "Remote Timeout").
+To organize feedback Smartupdater uses custom HTTP header <code>X-Smartupdater</code> and sends data with this header 
+data: JSON
+</p><p>
+In this example server keeps Smatrupdater timeout within range 5 - 15 sec. If you set it less then 5 sec, server re-set it to 5 sec in the next polling cycle. If you set timeout greater then 15 sec. server re-set it to 15 sec in the next cycle. No Smartupdater setting is needed.
+</p>
 
 
 </div> <!-- /rightpanel -->
@@ -65,11 +91,11 @@ function suSetTimeout()
 		minTimeout: 5000 // 5 seconds
 		}, function (data) {
 			$("#example1").html(data);
-			$("#statusTimeout").html($("#example1")[0].smartupdaterStatus.timeout);
 		}
 	);
 		
-	$("#newTimeout").val(5);
+	updateTimeoutStatus();
+	hInterval = setInterval('updateTimeoutStatus();',1000);
 		
 function suSetTimeout() 
 {
