@@ -66,6 +66,14 @@
 			es.origReq = {url:es.url,data:es.data,callback:callback};
 			
 			function start() {
+			
+				/* clean up if element was deleted */
+				if(elem.parentNode == null) {
+					clearInterval(elem.smartupdaterStatus.monitor);
+					$(elem).smartupdaterStop();
+					return;
+				} 
+		
 				$.ajax({
 					url		: es.url,
 					type	: es.type,
