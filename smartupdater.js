@@ -1,8 +1,7 @@
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 3.0.02
-*
+* Version - 3.1.00.beta
 * Copyright (c) 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
