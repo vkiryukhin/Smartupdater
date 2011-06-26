@@ -1,7 +1,7 @@
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 3.0.00 beta
+* Version - 3.0.02
 *
 * Copyright (c) 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
@@ -41,7 +41,7 @@
 			var elem = this,
 			es = {};
 
-			elem.settings = jQuery.extend({
+			elem.settings = jQuery.extend(true,{
 				url					: '',		// see jQuery.ajax for details
 				type				: 'get', 	// see jQuery.ajax for details
 				data				: '',   	// see jQuery.ajax for details
@@ -50,7 +50,8 @@
 				minTimeout			: 60000, 	// 1 minute by default
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
 				httpCache 			: false,	// no http cache by default
-				rCallback			: false		// no remote callback functions by default
+				rCallback			: false,		// no remote callback functions by default
+				smartStop			: {active:false, monitorTimeout:2500,minHeight:1,minWidth:1}
 
 			}, options);
 				
@@ -64,16 +65,18 @@
 			es.lastModified 	= '0';
 			es.callback 		= callback;
 			es.origReq = {url:es.url,data:es.data,callback:callback};
+			es.stopFlag = false;
 			
 			function start() {
 			
-				/* clean up if element was deleted */
-				if(elem.parentNode == null) {
-					clearInterval(elem.smartupdaterStatus.monitor);
-					$(elem).smartupdaterStop();
-					return;
+			/* check if element was deleted and clean it up  */
+				if(!$(elem).parents('body').length) {
+						clearInterval(elem.smartupdaterStatus.smartStop);
+						clearTimeout(elem.settings.h);
+						elem = {};
+						return;
 				} 
-		
+			
 				$.ajax({
 					url		: es.url,
 					type	: es.type,
@@ -111,7 +114,10 @@
 								es.prevContent == xhr.responseText || 
 								xhr.status == 304 ) { // data is not changed 
 								
+								if(!es.stopFlag) {
+									clearTimeout(es.h);
 									es.h = setTimeout(start, es.minTimeout);
+								}
 									
 						} else { // data is changed 
 
@@ -119,7 +125,10 @@
 							es.prevContent = xhr.responseText;
 							
 						/* reset timeout */
-							es.h = setTimeout(start, es.minTimeout);
+							if(!es.stopFlag) {
+								clearTimeout(es.h);
+								es.h = setTimeout(start, es.minTimeout);
+							}
 							
 						/* run callback function */
 							if(es.rCallback && rCallback && es.rCallback.search(rCallback) != -1) {
@@ -137,8 +146,11 @@
 						if ( ++es.failedRequests < es.maxFailedRequests ) {
 						
 						/* increment falure counter and reset timeout */
-							es.h = setTimeout(start, es.minTimeout);
-							elem.smartupdaterStatus.timeout = es.minTimeout;
+							if(!es.stopFlag) {
+								clearTimeout(es.h);
+								es.h = setTimeout(start, es.minTimeout);
+								elem.smartupdaterStatus.timeout = es.minTimeout;
+							}
 							
 						} else {
 						
@@ -167,11 +179,44 @@
 				
 			es.fnStart = start;
 			start();
+			
+			if(es.smartStop.active) {
+			
+				elem.smartupdaterStatus.smartStop = setInterval(function(){
+console.log("monitoring... 1");
+					// object has been deleted 
+					if(!$(elem).parents('body').length) {
+						clearInterval(elem.smartupdaterStatus.smartStop);
+						clearTimeout(elem.settings.h);
+						elem = {};
+						return;
+					} 
+					
+					var width = elem.offsetWidth,
+						height = elem.offsetHeight,
+						hidden = (width === 0 && height === 0) || 
+							(!jQuery.support.reliableHiddenOffsets && 
+							(elem.style.display || jQuery.css( elem, "display" )) === "none");
+											
+					//element has been minimized, so smartupdater should be stopped.
+					if( (hidden || height <= es.smartStop.minHeight || width <= es.smartStop.minWidth) 
+							&& elem.smartupdaterStatus.state=="ON") {
+						$(elem).smartupdaterStop();
+					} 
+					//element has been expanded, so smartupdater should be re-started.
+					if(!hidden && height > es.smartStop.minHeight && width > es.smartStop.minWidth 
+					     && elem.smartupdaterStatus.state=="OFF") {
+						$(elem).smartupdaterRestart();
+					}
+				},es.smartStop.monitorTimeout);
+			}
+			
 		});
 	}; 
 	
 	jQuery.fn.smartupdaterStop = function () {
 		return this.each(function () {
+			this.settings.stopFlag = true;
 			clearTimeout(this.settings.h);
             this.smartupdaterStatus.state = 'OFF';
 		});
@@ -179,6 +224,7 @@
         
     jQuery.fn.smartupdaterRestart = function () {        
 		return this.each(function () {
+			this.settings.stopFlag = false;
 			clearTimeout(this.settings.h);
 			this.settings.failedRequests = 0;
  			this.settings.etag = "0";
