@@ -6,15 +6,17 @@ $(document).ready(function()
 	$('li[data-content]').bind('click', function(event) {
 		var url = $(this).attr('data-content');
 		clearInterval(hInterval);
-		$("#example1").smartupdaterStop();
-		$("#example1").remove();
+		//$("#example1").smartupdaterStop();
+		//$("#example1").remove();
+		$('#content').empty();
 		
 		$.ajax( {
 			url: url,
 			dataType: "html",
 			success: function(data) {
-				$("#example1").smartupdaterStop();
-				$('#content').empty().html(data);
+				//$("#example1").smartupdaterStop();
+				//$('#content').empty().html(data);
+				$('#content').html(data);
 			}
 		});	
 		
@@ -43,18 +45,7 @@ function updateTimeoutStatus(mode)
 		clearInterval(hInterval);
 	}
 }
-/*
-function toggleApiDetails(obj) {
-	var state = $(obj).children("img").attr("src");
-	if (state == "img/demo-spindown-closed.gif") {
-		$(obj).children("img").attr("src","img/demo-spindown-open.gif");
-		$(obj).children(".apiDetails").css("display","block");
-	} else {
-		$(obj).children("img").attr("src","img/demo-spindown-closed.gif");
-		$(obj).children(".apiDetails").css("display","none");
-	}
-}
-*/
+
 function toggleApiDetails(obj) {
 	var re = /closed/;
 	var state = $(obj).css("background-image");

@@ -68,7 +68,7 @@
 			
 			function start() {
 			
-			/* check if element was deleted and clean it up  */
+			/* check if element has been deleted and clean it up  */
 				if(!$(elem).parents('body').length) {
 						clearInterval(elem.smartupdaterStatus.smartStop);
 						clearTimeout(elem.settings.h);
@@ -183,7 +183,7 @@
 			
 				elem.smartupdaterStatus.smartStop = setInterval(function(){
 console.log("monitoring... 1");
-					// object has been deleted 
+					// check if object has been deleted 
 					if(!$(elem).parents('body').length) {
 						clearInterval(elem.smartupdaterStatus.smartStop);
 						clearTimeout(elem.settings.h);

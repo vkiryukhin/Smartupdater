@@ -1,0 +1,44 @@
+<div>
+<p>Smartupdater plugin performs periodical updating functionality and can be used in all sorts of applications which need polling mechanisms. </p>
+
+<div id="smart_stop_demo">
+	<div id="smart_stop_demo_container" style="text-align:center;">
+		<div id="menu_show_both" class="menuShow">Display Both</div>
+		<div id="menu_show_first" class="menuShow">Display #1</div>
+		<div id="menu_show_second" class="menuShow">Display #2</div>
+		<br clear="all"/>
+		<div style="clear:all;margin-bottom:20px;"></div>
+		
+	<div id="module_1" class="ui-widget-content smartStop">
+		<div class="closeButton"  title="close" onclick="$(this).parent().remove();"> X&nbsp;&nbsp;</div>
+		<h3 class="ui-widget-header">Module #1</h3>
+	</div>		
+
+	<div id="module_2" class="ui-widget-content smartStop">		
+		<div  class="closeButton" title="close" onclick="$(this).parent().remove();"> X&nbsp;&nbsp;</div>
+		<h3 class="ui-widget-header">Module #2</h3>
+	</div>	
+
+	</div>
+
+</div>
+
+<div id="leftcolumn" class="leftcolumn"></div>
+
+<div id="rightcolumn" class="rightcolumn"></div>
+
+</div>
+
+<style>
+	.smartStop { width: 150px; height: 150px; padding: 0.5em; margin:10px; display:inline-block;
+		margin-left: auto;   margin-right: auto;}
+	.smartStop h3 { text-align: center; margin: 0; }
+	.menuShow {display:inline-block;  margin:10px;}
+	.closeButton {float:right;cursor:pointer;color:red;}
+</style>
+
+<script>
+	$(function() {
+		$( ".smartStop" ).resizable();
+	});
+</script>
