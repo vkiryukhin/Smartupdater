@@ -263,6 +263,39 @@ php code to set remote callback function:</p>
 </div>
 	</span>
 </li>
+
+
+
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		  
+<code>smartStop</code> - Activate feature which automatically Stops/Restarts Smartupdater depend on visibility and size of 
+<div class="apiDetails">
+
+<pre>
+$("#foo").smartupdater({
+	url : 'foo.php',
+	<span class="option">smartStop: {
+		active:true,
+		monitorTimeout:2500,
+		minHeight:100,
+		minWidth:100
+		}</span>
+	}, function (data) {
+		...
+		}
+);
+</pre>
+<code>active:	false | true</code> ( mandatory, default is <code>false</code>)<br/>
+<code>minHeight: integer</code> (optional, min height in pixels, default is <code>1</code>)<br/>
+<code>minWidth:  integer</code> (optional, min width in pixels, default is <code>1</code>)<br/>
+<code>monitorTimeout: milliseconds</code> (optional, default is <code>2500</code> ms)<br/><br/>
+
+<b>Note:</b> though self-monitoring is small and fast function, too many elements at too short monitorTimeout can affect browser performance</div>
+	</span>
+</li>
+
 </ul>
 
 <h4>List of available  features</h4>
@@ -302,6 +335,8 @@ Example, how Smartupdater builds this header:<br/>
 </div>
 	</span>
 </li>
+
+
 </ul>
 
 

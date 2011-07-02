@@ -7,7 +7,7 @@ background:#FFFFF0;}
 
 h1, h2, h3 {text-align:center; color:#000080;}
 p {margin:10px; padding:5px;}
-code {color:#000080; font-weight:bold;font-size:125%;}
+code {color:#000080; /*font-weight:bold;*/font-size:125%;fint-style:italic;}
 pre {font-size:120%;/*font-family: monospace;color:#000033; font-weight:bold;*/}
 a:link {color:black;}
 a:visited {color:black;}
@@ -21,11 +21,11 @@ a:visited {color:black;}
 
 #container { min-width:800px; border:0px solid green;}
 
-#menu { 	width:20%;	float:left; margin:5px;	border:0px solid blue; background:#E8E8FF; }
+#menu { 	width:20%;	float:left; margin:5px;	border:0px solid blue; background:#E8E8FF; padding:1%}
 #menu ul li ul li { cursor:pointer;}
 #menu ul li ul li:hover {color:#ff0000;}
 
-#content { width:78%; float:left; min-height:20px; border:0px solid black; }
+#content { width:77%; float:left; min-height:20px; border:0px solid black; }
 
 #footer { height:50px; text-align:center;color:#999999;font-size:70%;}
 
@@ -67,6 +67,10 @@ a:visited {color:black;}
 a:hover {color:#ff0000;}
 a:link {color:black;}
 a:visited {color:black;}
+
+.menu_selected {
+	background:#FFFFf0;
+}
 
 .php_code {
 	background-color:#F0F0ff;

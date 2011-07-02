@@ -6,24 +6,23 @@ $(document).ready(function()
 	$('li[data-content]').bind('click', function(event) {
 		var url = $(this).attr('data-content');
 		clearInterval(hInterval);
-		//$("#example1").smartupdaterStop();
-		//$("#example1").remove();
 		$('#content').empty();
 		
 		$.ajax( {
 			url: url,
 			dataType: "html",
 			success: function(data) {
-				//$("#example1").smartupdaterStop();
-				//$('#content').empty().html(data);
 				$('#content').html(data);
 			}
 		});	
 		
+		//$('li[data-content]').removeClass("menu_selected");
+		//$(this).addClass("menu_selected"); 
 	});
 	
 	$('#content').empty().load("content/overview.html");
-
+	
+	
 });
 
 function updateStatus(mode)

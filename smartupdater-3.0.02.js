@@ -1,7 +1,8 @@
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 3.1.00.beta
+* Version - 3.0.02
+*
 * Copyright (c) 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
@@ -28,7 +29,7 @@
 *		$("#myObject").smartupdaterAlterCallback();
 *
 *	Public Attributes:
-*		var smStatus  = $("#myObject")[0].smartupdaterStatus.state; 
+*		var smStatus = $("#myObject")[0].smartupdaterStatus.state; 
 *		var smTimeout = $("#myObject")[0].smartupdaterStatus.timeout;
 *
 **/
@@ -40,7 +41,7 @@
 			var elem = this,
 			es = {};
 
-			elem.settings = jQuery.extend(true,{
+			elem.settings = jQuery.extend({
 				url					: '',		// see jQuery.ajax for details
 				type				: 'get', 	// see jQuery.ajax for details
 				data				: '',   	// see jQuery.ajax for details
@@ -49,12 +50,7 @@
 				minTimeout			: 60000, 	// 1 minute by default
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
 				httpCache 			: false,	// no http cache by default
-				rCallback			: false,	// no remote callback functions by default
-				smartStop			: { active:			false, 	//disabled by default
-										monitorTimeout:	2500, 	// 2.5 seconds
-										minHeight:		1,	  	// 1px
-										minWidth:		1	  	// 1px	
-									  } 
+				rCallback			: false		// no remote callback functions by default
 
 			}, options);
 				
@@ -71,15 +67,6 @@
 			es.stopFlag = false;
 			
 			function start() {
-			
-			/* check if element has been deleted and clean it up  */
-				if(!$(elem).parents('body').length) {
-						clearInterval(elem.smartupdaterStatus.smartStop);
-						clearTimeout(elem.settings.h);
-						elem = {};
-						return;
-				} 
-			
 				$.ajax({
 					url		: es.url,
 					type	: es.type,
@@ -182,39 +169,6 @@
 				
 			es.fnStart = start;
 			start();
-			
-			if(es.smartStop.active) {
-			
-				elem.smartupdaterStatus.smartStop = setInterval(function(){
-
-					// check if object has been deleted 
-					if(!$(elem).parents('body').length) {
-						clearInterval(elem.smartupdaterStatus.smartStop);
-						clearTimeout(elem.settings.h);
-						elem = {};
-						return;
-					} 
-
-					var $elem = $(elem);
-					var width =  $elem.width(),
-						height = $elem.height(),
-						hidden = $elem.is(":hidden");
-						
-					//element has been expanded, so smartupdater should be re-started.
-					if(!hidden && height > es.smartStop.minHeight && width > es.smartStop.minWidth 
-					     && elem.smartupdaterStatus.state=="OFF") {
-						$elem.smartupdaterRestart();
-					} else 	
-					//element has been minimized, so smartupdater should be stopped.
-					if( (hidden || height <= es.smartStop.minHeight || width <= es.smartStop.minWidth) 
-							&& elem.smartupdaterStatus.state=="ON") {
-						$elem.smartupdaterStop();
-
-					} 
-					
-				},es.smartStop.monitorTimeout);
-			}
-			
 		});
 	}; 
 	

@@ -1,44 +1,163 @@
-<div>
-<p>Smartupdater plugin performs periodical updating functionality and can be used in all sorts of applications which need polling mechanisms. </p>
+<h3>Smart Stop</h3>
+<p>
+This feature can significantly improve application performance on both server and client and reduce network traffic. 
+</p>
+<div id="leftpanel" style="margin-right:30px;">
+
+<div id="demopanel">
 
 <div id="smart_stop_demo">
 	<div id="smart_stop_demo_container" style="text-align:center;">
-		<div id="menu_show_both" class="menuShow">Display Both</div>
-		<div id="menu_show_first" class="menuShow">Display #1</div>
-		<div id="menu_show_second" class="menuShow">Display #2</div>
+		 | 
+		<div  class="menuShow" onclick="$('#foo').toggle(); if(this.innerHTML=='Hide Foo'){this.innerHTML='Show Foo'}else{this.innerHTML='Hide Foo'}">Hide Foo</div>	|
+		
+		<div class="menuShow" onclick="$('#bar').toggle(); if(this.innerHTML=='Hide Bar'){this.innerHTML='Show Bar'}else{this.innerHTML='Hide Bar'}">Hide Bar</div> |
+		
 		<br clear="all"/>
 		<div style="clear:all;margin-bottom:20px;"></div>
 		
-	<div id="module_1" class="ui-widget-content smartStop">
-		<div class="closeButton"  title="close" onclick="$(this).parent().remove();"> X&nbsp;&nbsp;</div>
-		<h3 class="ui-widget-header">Module #1</h3>
+	<div id="foo" class="ui-widget-content smartStop">
+		<div class="closeButton" style="inline-block"  title="close" onclick="$(this).parent().remove();">
+			&times;&nbsp;&nbsp;
+		</div>
+		<img class="resizeButton"  src="img/collapse-expand2.jpg"/>
+		<h3 class="ui-widget-header">Foo</h3>
+		<div class="content"></div>
 	</div>		
 
-	<div id="module_2" class="ui-widget-content smartStop">		
-		<div  class="closeButton" title="close" onclick="$(this).parent().remove();"> X&nbsp;&nbsp;</div>
-		<h3 class="ui-widget-header">Module #2</h3>
+	<div id="bar" class="ui-widget-content smartStop">
+		<div class="closeButton" style="inline-block"  title="close" onclick="$(this).parent().remove();"> &times;&nbsp;&nbsp;</div>
+
+		<img class="resizeButton"  src="img/collapse-expand2.jpg"/>
+		<h3 class="ui-widget-header">Bar</h3>
+		<div class="content"></div>
 	</div>	
 
 	</div>
 
 </div>
+</div><!-- demo panel -->
+<div id="codepanel" >
 
-<div id="leftcolumn" class="leftcolumn"></div>
+<div class="codecontrol" onclick="$(this).siblings().toggle();">[ view code ]</div> 
+<div class="codesource" >
+<div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
 
-<div id="rightcolumn" class="rightcolumn"></div>
+<pre>
+
+&lt;div id="foo" class="ui-widget-content smartStop"&gt;
+	&lt;div class="closeButton" style="inline-block" onclick="$(this).parent().remove();"&gt; &times; &lt;/div&gt;
+	&lt;img class="resizeButton"  src="img/collapse-expand2.jpg"/&gt;
+	&lt;h3 class="ui-widget-header"&gt;Foo&lt;/h3&gt;
+	&lt;div class="content"&gt;&lt;/div&gt;
+&lt;/div&gt;		
+
+&lt;div id="bar" class="ui-widget-content smartStop"&gt;
+	&lt;div class="closeButton" style="inline-block" onclick="$(this).parent().remove();"&gt; &times; &lt;/div&gt;
+	&lt;img class="resizeButton"  src="img/collapse-expand2.jpg"/&gt;
+	&lt;h3 class="ui-widget-header"&gt;Bar&lt;/h3&gt;
+	&lt;div class="content"&gt;&lt;/div&gt;
+&lt;/div&gt;	
+
+
+$("#foo").smartupdater({
+		url : 'php/getsec_foo.php',
+		minTimeout: 4000, 
+		smartStop: {active:true, monitorTimeout:1500,minHeight:100,minWidth:100}
+	}, function (data) {
+			$("#foo > .content").html(data);
+		}
+);
+		
+$("#bar").smartupdater({
+		url : 'php/getsec_bar.php',
+		minTimeout: 4000, 
+		smartStop: {active:true, monitorTimeout:1500,minHeight:100,minWidth:100}
+	}, function (data) {
+			$("#bar > .content").html(data);
+		}
+);
+</pre>
+</div>
+</div> <!-- /codepanel -->
 
 </div>
 
+<div id="rightpanel">
+<div>
+<p>
+It's simple:  automatically stop polling if the result can not be visible and restart it as soon as it can be visible again. 
+But when result can not be visible? 
+</p>
+<p>
+- module is minimized or set too small to display result.<br/>
+- module is invisible ( set display:none)
+
+</p><p>
+Smartupdater automatically checks element's size and visibility and stops/restarts itself based on the element's state.
+<br/>
+If you use "Accordion" technique or multi-table view or let users to minimize modules to get more space - consider to activate "smartStop" feature.
+</p>
+
+<p>
+In this example minHeight=100px and minWidth=100px. <br/>
+Resize these modules manually, minimize/maximize them with button, hide/show one or both of them and check network activity.
+</p>
+</div>
+</div>
+
 <style>
-	.smartStop { width: 150px; height: 150px; padding: 0.5em; margin:10px; display:inline-block;
-		margin-left: auto;   margin-right: auto;}
-	.smartStop h3 { text-align: center; margin: 0; }
-	.menuShow {display:inline-block;  margin:10px;}
-	.closeButton {float:right;cursor:pointer;color:red;}
+	.smartStop { 
+		width: 200px; 
+		height: 200px; 
+		padding: 0.5em; 
+		margin:10px; 
+		display:inline-block;
+		margin-left: auto;   
+		margin-right: auto;
+	}
+	.smartStop h3 { text-align: center; margin:0;}
+	.menuShow {display:inline-block;  margin:10px;cursor:pointer;}
+	.menuShow:hover {background-color:#FFFF80;}
+	
+	.closeButton {float:right;cursor:pointer;font-weight:bold;}
+	.resizeButton {float:right;cursor:pointer;margin-top:3px;margin-right:8px;}
+	.content {margin-top:10px;}
 </style>
 
 <script>
 	$(function() {
 		$( ".smartStop" ).resizable();
+		
+		$("img.resizeButton").bind('click', function() {
+			var $self=$(this);
+			if($self.parent().height()<51){
+				$self.parent().height(200);
+			} else {
+				$self.parent().height(50);
+			}
+		});
+		
+		$("#foo").smartupdater({
+			url : 'php/getsec_foo.php',
+			minTimeout: 2000, 
+			smartStop: {active:true, monitorTimeout:1500,minHeight:100,minWidth:100}
+			}, function (data) {
+				$("#foo > .content").html(data);
+				}
+		);
+		
+		$("#bar").smartupdater({
+			url : 'php/getsec_bar.php',
+			minTimeout: 2000, 
+			smartStop: {active:true, monitorTimeout:1500,minHeight:100,minWidth:100}
+			}, function (data) {
+				$("#bar > .content").html(data);
+				}
+		);
+
 	});
+	
+	
+	
 </script>
