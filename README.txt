@@ -1,3 +1,10 @@
+The only file you need to download and use in your project is
+
+smartupdater.js
+
+The rest stuff is demo, which you can see and play with at
+http://www.eslinstructor.net/smartupdater3/
+
 /**
 * smartupdater - jQuery Plugin
 *  
