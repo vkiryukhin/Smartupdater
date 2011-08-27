@@ -50,6 +50,7 @@
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
 				httpCache 			: false,	// no http cache by default
 				rCallback			: false,	// no remote callback functions by default
+				selfStart			: true,		// start automatically after initializing
 				smartStop			: { active:			false, 	//disabled by default
 										monitorTimeout:	2500, 	// 2.5 seconds
 										minHeight:		1,	  	// 1px
@@ -181,7 +182,10 @@
 			} 
 				
 			es.fnStart = start;
-			start();
+			
+			if(es.selfStart) {
+				start();
+			}
 			
 			if(es.smartStop.active) {
 			
