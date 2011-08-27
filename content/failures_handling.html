@@ -51,7 +51,8 @@ $("#example1").smartupdater({
 <script type="text/javascript">
 		$("#example1").smartupdater({
 			url : 'php/fake.php',
-			maxFailedRequests 	: 6,
+			//maxFailedRequests 	: 3,
+			maxFailedRequests 	: {number:3, callback:function(xhr, textStatus, errorThrown){alert(textStatus)}},
 			minTimeout: 5000 // 2 seconds
 			}, function (data) {
 				$("#example1").html(data);

@@ -70,6 +70,12 @@
 			es.callback 		= callback;
 			es.origReq = {url:es.url,data:es.data,callback:callback};
 			es.stopFlag = false;
+			if(typeof(es.maxFailedRequests) === 'object') {
+				es.maxFailedNum = es.maxFailedRequests.number;
+				es.maxFailedCb  = es.maxFailedRequests.callback;
+			} else {
+				es.maxFailedNum = es.maxFailedRequests;
+			}
 			
 			function start() {
 			
@@ -147,7 +153,7 @@
 					}, 
 							
 					error: function(xhr, textStatus, errorThrown) { 
-						if ( ++es.failedRequests < es.maxFailedRequests ) {
+						if ( ++es.failedRequests < es.maxFailedNum ) {
 						
 						/* increment falure counter and reset timeout */
 							if(!es.stopFlag) {
@@ -161,6 +167,7 @@
 						/* stop smartupdater */
 							clearTimeout(es.h);
 							elem.smartupdaterStatus.state = 'OFF';
+							es.maxFailedCb(xhr, textStatus, errorThrown);
 						}
 					},
 					
