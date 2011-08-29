@@ -70,11 +70,18 @@
 			es.callback 		= callback;
 			es.origReq = {url:es.url,data:es.data,callback:callback};
 			es.stopFlag = false;
+		
 			if(typeof(es.maxFailedRequests) === 'object') {
-				es.maxFailedNum = es.maxFailedRequests.number;
-				es.maxFailedCb  = es.maxFailedRequests.callback;
-			} else {
+				es.maxFailedNum = (typeof(es.maxFailedRequests.number) == 'undefined') ? 10 : es.maxFailedRequests.number;
+				es.maxFailedCb  = (typeof(es.maxFailedRequests.callback)== 'undefined') ? false : es.maxFailedRequests.callback;
+			} else
+			if(typeof(es.maxFailedRequests) === 'number') {
 				es.maxFailedNum = es.maxFailedRequests;
+				//es.maxFailedCb = false;
+			} else { //wrong parameter is given, so let's set default
+				es.maxFailedNum = 5;
+				//es.maxFailedCb = false;
+console.error("invalid maxFailedRequests is provided, smartupdater ignors it");
 			}
 			
 			function start() {
@@ -167,7 +174,12 @@
 						/* stop smartupdater */
 							clearTimeout(es.h);
 							elem.smartupdaterStatus.state = 'OFF';
-							es.maxFailedCb(xhr, textStatus, errorThrown);
+							
+console.log("typeof is: "+typeof(es.maxFailedCb));					
+		
+							if( typeof(es.maxFailedCb)==='function') {
+								es.maxFailedCb(xhr, textStatus, errorThrown);
+							}
 						}
 					},
 					
