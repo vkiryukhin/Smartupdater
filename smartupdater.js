@@ -48,6 +48,7 @@
 						
 				minTimeout			: 60000, 	// 1 minute by default
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
+				maxFailedCallback	: false, 	// no callback function by default
 				httpCache 			: false,	// no http cache by default
 				rCallback			: false,	// no remote callback functions by default
 				selfStart			: true,		// start automatically after initializing
@@ -71,18 +72,6 @@
 			es.origReq = {url:es.url,data:es.data,callback:callback};
 			es.stopFlag = false;
 		
-			if(typeof(es.maxFailedRequests) === 'object') {
-				es.maxFailedNum = (typeof(es.maxFailedRequests.number) == 'undefined') ? 10 : es.maxFailedRequests.number;
-				es.maxFailedCb  = (typeof(es.maxFailedRequests.callback)== 'undefined') ? false : es.maxFailedRequests.callback;
-			} else
-			if(typeof(es.maxFailedRequests) === 'number') {
-				es.maxFailedNum = es.maxFailedRequests;
-				//es.maxFailedCb = false;
-			} else { //wrong parameter is given, so let's set default
-				es.maxFailedNum = 5;
-				//es.maxFailedCb = false;
-console.error("invalid maxFailedRequests is provided, smartupdater ignors it");
-			}
 			
 			function start() {
 			
@@ -160,7 +149,7 @@ console.error("invalid maxFailedRequests is provided, smartupdater ignors it");
 					}, 
 							
 					error: function(xhr, textStatus, errorThrown) { 
-						if ( ++es.failedRequests < es.maxFailedNum ) {
+						if ( ++es.failedRequests < es.maxFailedRequests ) {
 						
 						/* increment falure counter and reset timeout */
 							if(!es.stopFlag) {
@@ -174,11 +163,8 @@ console.error("invalid maxFailedRequests is provided, smartupdater ignors it");
 						/* stop smartupdater */
 							clearTimeout(es.h);
 							elem.smartupdaterStatus.state = 'OFF';
-							
-console.log("typeof is: "+typeof(es.maxFailedCb));					
-		
-							if( typeof(es.maxFailedCb)==='function') {
-								es.maxFailedCb(xhr, textStatus, errorThrown);
+							if( typeof(es.maxFailedCallback)==='function') {
+								es.maxFailedCallback(xhr, textStatus, errorThrown);
 							}
 						}
 					},

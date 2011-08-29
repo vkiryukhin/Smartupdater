@@ -52,11 +52,9 @@ $("#example1").smartupdater({
 		$("#example1").smartupdater({
 			url : 'php/fake.php',
 			maxFailedRequests 	: 3,
-			//maxFailedRequests 	: { number:5, callback:function(xhr, textStatus, errorThrown){ alert(textStatus);} },
-			//maxFailedRequests 	: { number:3 },
-			//maxFailedRequests 	: { callback:function(xhr, textStatus, errorThrown){ alert( textStatus);} },
-			//maxFailedRequests 	: { num_ber:3, callback:"junk" },
-			
+			maxFailedCallback : function(xhr, textStatus, errorThrown){
+											alert(errorThrown);
+										},
 			minTimeout: 2000 // 2 seconds
 			}, function (data) {
 				$("#example1").html(data);
