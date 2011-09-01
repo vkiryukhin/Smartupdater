@@ -48,7 +48,7 @@
 						
 				minTimeout			: 60000, 	// 1 minute by default
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
-				maxFailedCallback	: false, 	// no callback function by default
+				maxFailedRequestsCb	: false, 	// no callback function by default
 				httpCache 			: false,	// no http cache by default
 				rCallback			: false,	// no remote callback functions by default
 				selfStart			: true,		// start automatically after initializing
@@ -163,8 +163,8 @@
 						/* stop smartupdater */
 							clearTimeout(es.h);
 							elem.smartupdaterStatus.state = 'OFF';
-							if( typeof(es.maxFailedCallback)==='function') {
-								es.maxFailedCallback(xhr, textStatus, errorThrown);
+							if( typeof(es.maxFailedRequestsCb)==='function') {
+								es.maxFailedRequestsCb(xhr, textStatus, errorThrown);
 							}
 						}
 					},

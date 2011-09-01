@@ -201,6 +201,35 @@
 			</div>
 	</span>
 </li>
+
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		  
+<code>maxFailedRequestsCb</code> - smartupdater calls this function 
+to handle "maxFailedRequests" event.
+
+<div class="apiDetails">
+<code>
+<pre>$("#example1").smartupdater({
+	url : 'fake.php',<span class="option">
+	maxFailedRequestsCb : function(xhr, textStatus, errorThrown){
+					alert(errorThrown);
+				},</span>
+	}, function (data) {
+		...
+	}
+);
+</pre>
+</code>
+<p>Smartupdater calls this function after   <code>maxFailedRequests</code> number of AJAX 
+errors and pases ajax object as the 1st parameter and error info as 2nd and 3rd parameter ( see jQuery AJAX fof details) 
+
+</p>
+</div>
+</span>
+</li>
+
 			
 <li>
 <span class="toggleApiDetails" onclick="toggleApiDetails(this)">
@@ -295,6 +324,34 @@ $("#foo").smartupdater({
 <b>Note:</b> though self-monitoring is small and fast function, too many elements at too short monitorTimeout can affect browser performance</div>
 	</span>
 </li>
+
+<li>
+<span class="toggleApiDetails" onclick="toggleApiDetails(this)">
+		  
+<code>selfStart</code> - Disable  aatomatic start.
+<div class="apiDetails">
+<code>
+<pre>$("#example1").smartupdater({
+    url : 'foo.php',<span class="option">
+    selfStart: false, 	// <b><small><code>true</b></small></code> by default</span>
+    }, function (data) {
+        ...
+    }
+);</pre>
+</code>
+
+<p>By default Smartupdater is started automatically by itself immideately after it was created. 
+If you don't need to run polling process immideately, you can 
+disable self start by setting this option to <code>false</code>. 
+Use smartupdaterRestart() function to start smartupdater manually.
+</p>
+
+
+</div>
+</span>
+
+</li>
+
 
 </ul>
 

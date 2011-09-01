@@ -52,7 +52,7 @@ Sometimes you want to stop polling and continue it later. For example if user mi
 <script type="text/javascript">
 		$("#example1").smartupdater({
 			url: 'php/getsec.php',
-			//selfStart: true,
+			selfStart: false,
 			minTimeout: 2000 // 2 seconds
 			}, function (data) {
 				$("#example1").html(data);

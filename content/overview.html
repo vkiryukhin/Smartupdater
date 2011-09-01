@@ -15,13 +15,18 @@
 	</li>
 	<li>Smart behavior:
 		<ul>
-		<li><b>Polling:</b> <i><sup style="color:red;font-size:80%;">new in 3.1</sup></i>
-			<div>depend on element's size, current layout and visibility client automatically stops and restarts polling</div>
+		<li><b>Polling:</b> 
+			<div>depend on element's size, current layout and visibility client automatically stops and restarts polling 
+			<i><sup style="color:red;font-size:80%;">new in 3.1</sup></i></div>
 		</li>
 		
 		<li><b>Updating:</b> <div>client GUI is updated only if new data is different from the old one.</div></li>
 			
-		<li><b>Errors:</b> <div>stop polling after predefined number of failures.</div></li>
+		<li><b>Errors:</b> <div>stop polling after predefined number of failures and call  
+						callback function to handle this event.
+						
+		</div>
+		</li>
 
 		<li><b>Traffic:</b> <div>support "304 NotModified" http caching with "ETag" and "Last-Modified"</div></li>
 
@@ -71,9 +76,13 @@
 			<li><code>dataType</code> - Response type<br/><br/></li>
 			<li><code>minTimeout</code> - Value for the timeout, in milliseconds.</li>
 			<li><code>maxFailedRequests</code> - smartupdater stops after this number of consecutive ajax failures;</li>
+			<li><code>maxFailedRequestsCb</code> - function to handle "<i>maxFailedRequests</i>" event.
+						<i><sup style="color:red;font-size:80%;">new in 3.2</sup></i></li>
 			<li><code>httpCache</code> - Activate http caching feature</li>
 			<li><code>rCallback</code> - List of callback functions which are allowed to run remotely from server</li>
 			<li><code>smartStop</code> - Activate feature which automatically Stops/Restarts Smartupdater depend on visibility and size of element Smartupdater is attached to. </li>
+			<li><code>selfStart</code> - Disable initial self start.<i><sup style="color:red;font-size:80%;">new in 3.2</sup></i></li>
+			
 
 		</ul>
 	</li>
