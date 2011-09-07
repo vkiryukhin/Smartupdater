@@ -24,7 +24,10 @@
 
 $("#example1").smartupdater({
 	url : 'php/fake.php',<span class="option">
-	maxFailedRequests : 6,</span>
+	maxFailedRequests : 3,</span>
+	maxFailedRequestsCb : function(xhr, textStatus, errorThrown){
+				alert("maxFailedRequestsCb() is called");
+			},
 	minTimeout: 5000 // 5 seconds
 	}, function (data) {
 		$("#example1").html(data);
@@ -53,9 +56,9 @@ $("#example1").smartupdater({
 			url : 'php/fake.php',
 			maxFailedRequests 	: 3,
 			maxFailedRequestsCb : function(xhr, textStatus, errorThrown){
-											alert("Number of failed requeststs reached max");
+											alert("maxFailedRequestsCb() is called");
 										},
-			minTimeout: 2000 // 2 seconds
+			minTimeout: 5000 // 5 seconds
 			}, function (data) {
 				$("#example1").html(data);
 			}

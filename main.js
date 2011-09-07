@@ -11,6 +11,7 @@ $(document).ready(function()
 		$.ajax( {
 			url: url,
 			dataType: "html",
+			cache	: false, 
 			success: function(data) {
 				$('#content').html(data);
 			}

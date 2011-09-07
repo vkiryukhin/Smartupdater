@@ -1,7 +1,7 @@
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 3.1.00
+* Version - 3.2.00.beta
 * Copyright (c) 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
@@ -48,7 +48,7 @@
 						
 				minTimeout			: 60000, 	// 1 minute by default
 				maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
-				maxFailedRequestsCb	: false, 	// no callback function by default
+				maxFailedRequestsCb	: false, 	// no falure callback function by default
 				httpCache 			: false,	// no http cache by default
 				rCallback			: false,	// no remote callback functions by default
 				selfStart			: true,		// start automatically after initializing

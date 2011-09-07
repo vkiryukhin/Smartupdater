@@ -223,7 +223,7 @@ to handle "maxFailedRequests" event.
 </pre>
 </code>
 <p>Smartupdater calls this function after   <code>maxFailedRequests</code> number of AJAX 
-errors and pases ajax object as the 1st parameter and error info as 2nd and 3rd parameter ( see jQuery AJAX fof details) 
+errors and passes ajax object as the 1st parameter and error info as 2nd and 3rd parameter ( see jQuery AJAX fof details) 
 
 </p>
 </div>
@@ -330,15 +330,15 @@ $("#foo").smartupdater({
 		  
 <code>selfStart</code> - Disable  aatomatic start.
 <div class="apiDetails">
-<code>
+
 <pre>$("#example1").smartupdater({
     url : 'foo.php',<span class="option">
-    selfStart: false, 	// <b><small><code>true</b></small></code> by default</span>
+    selfStart: false, 	// <code>true</code> by default</span>
     }, function (data) {
         ...
     }
 );</pre>
-</code>
+
 
 <p>By default Smartupdater is started automatically by itself immideately after it was created. 
 If you don't need to run polling process immideately, you can 
