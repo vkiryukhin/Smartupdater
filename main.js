@@ -30,7 +30,8 @@ function updateStatus(mode)
 {
 	var statusSU = document.getElementById("statusSU");
 	if(statusSU) {
-			$("#statusSU").html($("#example1")[0].smartupdaterStatus.state);
+			//$("#statusSU").html($("#example1")[0].smartupdaterStatus.state);
+			$("#statusSU").html($("#example1").smartupdater("getState"));
 	} else {
 		clearInterval(hInterval);
 	}
@@ -40,7 +41,8 @@ function updateTimeoutStatus(mode)
 {
 	var statusSU = document.getElementById("statusSU");
 	if(statusSU) {
-			$("#statusSU").html($("#example1")[0].smartupdaterStatus.timeout);
+			//$("#statusSU").html($("#example1")[0].smartupdaterStatus.timeout);
+			$("#statusSU").html($("#example1").smartupdater("getTimeout"));
 	} else {
 		clearInterval(hInterval);
 	}

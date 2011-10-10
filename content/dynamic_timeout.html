@@ -73,7 +73,8 @@ function suSetTimeout()
 {
 	var timeout = $("#newTimeout").val() * 1000;
 	if (timeout < 1000) timeout = 1000;
-	$("#example1").smartupdaterSetTimeout(timeout);
+	//$("#example1").smartupdaterSetTimeout(timeout);
+	$("#example1").smartupdater("setTimeout",timeout);
 }
 
 </script>

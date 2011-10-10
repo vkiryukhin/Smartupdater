@@ -11,8 +11,11 @@
 		<div>Time on server: <span class="data" id='example1'></span></div>
 <br/>
 
-<input type="button" value="default" onclick='$("#example1").smartupdaterAlterCallback().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
-<input type="button" value="foo( )" onclick='$("#example1").smartupdaterAlterCallback(foo).smartupdaterRestart();' />
+<!--input type="button" value="default" onclick='$("#example1").smartupdaterAlterCallback().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="foo( )" onclick='$("#example1").smartupdaterAlterCallback(foo).smartupdaterRestart();' /-->
+
+<input type="button" value="default" onclick='$("#example1").smartupdater("alterCallback").smartupdater("restart");' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="foo( )" onclick='$("#example1").smartupdater("alterCallback", foo).smartupdater("restart");' />
 
 
 

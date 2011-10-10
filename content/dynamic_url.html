@@ -10,8 +10,11 @@
 		<div>Time on server: <span class="data" id='example1'></span></div>
 <br/>
 
-<input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
-<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdaterAlterUrl("php/getsecreverse.php").smartupdaterRestart();' />
+<!--input type="button" value="default" onclick='$("#example1").smartupdaterAlterUrl().smartupdaterRestart();' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdaterAlterUrl("php/getsecreverse.php").smartupdaterRestart();' /-->
+
+<input type="button" value="default" onclick='$("#example1").smartupdater("alterUrl").smartupdater("restart");' /> &nbsp;&nbsp;&nbsp;
+<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdater("alterUrl","php/getsecreverse.php").smartupdater("restart");' />
 
 	</div> <!-- /demopanel -->
 

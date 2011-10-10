@@ -10,8 +10,11 @@
 		<div>Smartpdater State: <span class="data" id="statusSU"></span></div>
 		<br/>
 
-		<input onclick='$("#example1").smartupdaterStop(); updateStatus();' type="button" value="Stop" />
-		<input onclick='$("#example1").smartupdaterRestart(); updateStatus();' type="button" value="Restart" />
+		<!--input onclick='$("#example1").smartupdaterStop(); updateStatus();' type="button" value="Stop" /-->
+		<!--input onclick='$("#example1").smartupdaterRestart(); updateStatus();' type="button" value="Restart" /-->
+		
+		<input onclick='$("#example1").smartupdater("stop"); updateStatus();' type="button" value="Stop" />
+		<input onclick='$("#example1").smartupdater("restart"); updateStatus();' type="button" value="Restart" />
 	</div> <!-- /demopanel -->
 
 <div id="codepanel" >
