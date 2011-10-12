@@ -1,5 +1,10 @@
 <div >
+
 <p>Smartupdater plugin performs periodical updating functionality and can be used in all sorts of applications which need polling mechanisms. </p>
+<i style="font-size:90%" ><b>Current version is 4.0</b>. Smartupdater version 4.0 has exactly the same functionality as version <b>3.2</b>. The difference is API style and internal coding technique. If you already use version 3.2, you don't need to upgrade.</i></div>
+
+	
+
 
 <div id="leftcolumn" class="leftcolumn">
 <ul>
@@ -54,17 +59,17 @@
 <ul>
 	<li>List of available functions
 		<ul>
-			<li><code>smartupdaterStop()</code> - to stop polling</li>
-			<li><code>smartupdaterRestart()</code> - to run polling</li>
-			<li><code>smartupdaterSetTimeout()</code> - to set a new polling interval</li>
-			<li><code>smartupdaterAlterUrl()</code> - to alter URL and/or callback function</li>
-			<li><code>smartupdaterAlterCallback()</code> - to alter URL and/or callback function</li>
+			<li><code>smartupdater("stop")</code> - to stop polling</li>
+			<li><code>smartupdater("restart")</code> - to run polling</li>
+			<li><code>smartupdater("setTimeout",timeout)</code> - to set a new polling interval</li>
+			<li><code>smartupdater("alterUrl"[,url[,data]])</code> - to alter URL</li>
+			<li><code>smartupdater("alterCallback"[,callback])</code> - to alter callback</li>
 		</ul>
 	</li>
 	<li>List of available attributes
 		<ul>
-			<li><code>smartupdaterStatus.state</code> - current state (ON|OFF|undefined)</li>
-			<li><code>smartupdaterStatus.timeout</code> - current timeout</li>
+			<li><code>smartupdater("getState"); </code> - current state (ON|OFF|undefined)</li>
+			<li><code>smartupdater("getTimeout");</code> - current timeout</li>
 		</ul>
 	</li>
 

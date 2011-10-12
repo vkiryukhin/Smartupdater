@@ -14,7 +14,7 @@
 <input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdaterAlterUrl("php/getsecreverse.php").smartupdaterRestart();' /-->
 
 <input type="button" value="default" onclick='$("#example1").smartupdater("alterUrl").smartupdater("restart");' /> &nbsp;&nbsp;&nbsp;
-<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdater("alterUrl","php/getsecreverse.php").smartupdater("restart");' />
+<input type="button" value="getsecreverse.php" onclick='$("#example1").smartupdater("alterUrl","php/getsecreverse.php",{"arg":"admin","value":0}).smartupdater("restart");' />
 
 	</div> <!-- /demopanel -->
 
@@ -24,13 +24,13 @@
 <div class="codesource" >
 <div class="close_button" onclick="$(this).parent().toggle()" title="close" >[ X ]</div>
 <pre>
-&lt;input type="button" value="default" onclick='$("#example1").
-            smartupdaterAlterUrl().
-            smartupdaterRestart();' /&gt;
+&lt;input type="button" value="default" onclick='$("#example1")
+            .smartupdater("alterUrl")
+            .smartupdater("restart");' /&gt;
 			
-&lt;input type="button" value="getsecreverse.php" onclick='$("#example1").
-            smartupdaterAlterUrl("php/getsecreverse.php",{"arg":"admin","value":0}).
-            smartupdaterRestart();' /&gt;
+&lt;input type="button" value="getsecreverse.php" onclick='$("#example1")
+            .smartupdater(alterUrl","php/getsecreverse.php",{"arg":"admin","value":0})
+            .smartupdaterRestart();' /&gt;
 
 $("#example1").smartupdater({
     url : 'php/getsec.php',
