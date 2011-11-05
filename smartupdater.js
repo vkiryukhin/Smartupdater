@@ -1,11 +1,11 @@
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 4.0 
+* Version - 4.0.beta 
 * Copyright (c) 2010 - 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
-* http://www.eslinstructor.net/smartupdater3/
+* http://www.eslinstructor.net/smartupdater/
 *
 * Dual licensed under the MIT and GPL licenses:
 *   http://www.opensource.org/licenses/mit-license.php
@@ -50,8 +50,8 @@
 						dataType			: 'text', 	// see jQuery.ajax for details
 								
 						minTimeout			: 60000, 	// 1 minute
-						maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures by default
-						maxFailedRequestsCb	: false, 	// falure callback function by default
+						maxFailedRequests 	: 10, 		// max. number of consecutive ajax failures
+						maxFailedRequestsCb	: false, 	// falure callback function
 						httpCache 			: false,	// http cache 
 						rCallback			: false,	// remote callback functions
 						selfStart			: true,		// start automatically after initializing
@@ -91,7 +91,7 @@
 							type	: es.type,
 							data	: es.data,
 							dataType: es.dataType,
-							cache	: false, // MUST be set to false to prevent IE caching bug.
+							cache	: false, // MUST be set to false to prevent IE caching issue.
 
 							success: function (data, statusText, xhr) {
 							
@@ -215,13 +215,11 @@
 							//element has been expanded, so smartupdater should be re-started.
 							if(!hidden && height > es.smartStop.minHeight && width > es.smartStop.minWidth 
 								 && elem.smartupdaterStatus.state=="OFF") {
-								//$elem.smartupdaterRestart();
 								$elem.smartupdater("restart");
 							} else 	
 							//element has been minimized, so smartupdater should be stopped.
 							if( (hidden || height <= es.smartStop.minHeight || width <= es.smartStop.minWidth) 
 									&& elem.smartupdaterStatus.state=="ON") {
-								//$elem.smartupdaterStop();
 								$elem.smartupdater("stop");
 
 							} 
@@ -293,56 +291,6 @@
 			$.error( 'Method ' +  options + ' does not exist on jQuery.tooltip' );
 		}
 	}; 
-	
 
-//-------------------------------------------------------------	
-/*	
-	jQuery.fn.smartupdaterStop = function () {
-		return this.each(function () {
-			this.settings.stopFlag = true;
-			clearTimeout(this.settings.h);
-            this.smartupdaterStatus.state = 'OFF';
-		});
-	}; 
-*/  
-
-/*      
-    jQuery.fn.smartupdaterRestart = function () {        
-		return this.each(function () {
-			this.settings.stopFlag = false;
-			clearTimeout(this.settings.h);
-			this.settings.failedRequests = 0;
- 			this.settings.etag = "0";
-			this.settings.lastModified = "0";
-			this.settings.fnStart();
-		});
-	}; 
-*/	
-/*
-	jQuery.fn.smartupdaterSetTimeout = function (period) {
-		return this.each(function () {
-			clearTimeout(this.settings.h);
-			this.settings.minTimeout = period;
-            this.settings.fnStart();
-		});
-	}; 
-*/
-
-/*	
-	jQuery.fn.smartupdaterAlterCallback = function (callback) {
-		return this.each(function () {
-			this.settings.callback  = callback	? callback 	: this.settings.origReq.callback;
- 		});
-	}; 
-*/	
-
-/*
-	jQuery.fn.smartupdaterAlterUrl = function (url,data) {
-		return this.each(function () {
-			this.settings.url 	= url 	? url : this.settings.origReq.url;
-			this.settings.data	= data 	? data : this.settings.origReq.data;
- 		});
-	}; 
-*/
 	
 })(jQuery);
