@@ -288,7 +288,7 @@
 		} else if ( typeof options === 'object' || ! method ) {
 			return methods.init.apply( this, arguments );
 		} else {
-			$.error( 'Method ' +  options + ' does not exist on jQuery.tooltip' );
+			$.error( 'Method ' +  options + ' does not exist on jQuery.smartupdater' );
 		}
 	}; 
 
