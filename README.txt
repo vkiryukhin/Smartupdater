@@ -8,7 +8,7 @@ http://www.eslinstructor.net/smartupdater3/
 /**
 * smartupdater - jQuery Plugin
 *  
-* Version - 4.0.beta 
+* Version - 4.0
 * Copyright (c) 2010 - 2011 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
