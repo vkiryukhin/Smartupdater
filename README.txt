@@ -9,7 +9,7 @@ http://www.eslinstructor.net/smartupdater3/
 * smartupdater - jQuery Plugin
 *  
 * Version - 4.0
-* Copyright (c) 2010 - 2011 Vadim Kiryukhin
+* Copyright (c) 2010 - 2012 Vadim Kiryukhin
 * vkiryukhin @ gmail.com
 * 
 * http://www.eslinstructor.net/smartupdater/
